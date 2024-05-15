@@ -1,0 +1,15 @@
+.panel.mos_specification_options_panel {
+  padding: 10px;
+}
+.panel.mos_specification_options_panel .mos-specification-group-title .ui-accordion-header-icon {
+  transition: all 0.3s ease-out;
+}
+.panel.mos_specification_options_panel .mos-specification-group-title.ui-accordion-header-active .ui-accordion-header-icon, .panel.mos_specification_options_panel .mos-specification-group-title.ui-state-active .ui-accordion-header-icon {
+  transform: rotate(90deg);
+}
+.panel.mos_specification_options_panel .mos-specification-add-group {
+  margin-top: 10px;
+}
+.panel.mos_specification_options_panel .mos-specification-remove {
+  text-align: right;
+}/*# sourceMappingURL=mos-product-specifications-tab-admin.css.map */

@@ -1,0 +1,139 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+table.product-specifications-table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  table-layout: fixed;
+  @media screen and (max-width: 480px) {
+    border-style: none;
+    width: 100%;
+  }
+  tr {
+    // border: 1px solid #ddd;
+    padding: 0.35em;
+    @media screen and (max-width: 480px) {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.625em;
+      padding: 0;
+    }
+  }
+  th,
+  td {
+    padding: 0.625em;
+    text-align: left;
+    border: 1px solid rgb(190, 190, 190);
+    position: relative;
+    * {
+      margin-top: 0;
+    }
+    & > *:last-child {
+      margin-bottom: 0;
+    }
+  }
+  th {
+    font-size: 0.85em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: #f7f8f9;
+    text-align: left;
+    width: 180px;
+    vertical-align: middle;
+    @media screen and (max-width: 480px) {
+      display: none;
+    }
+  }
+  td {
+    @media screen and (max-width: 480px) {
+      padding-left: 0;
+      padding-right: 0;
+      padding-top: 0;
+      text-align: center;
+      width: 100%;
+      display: block;
+      &::before {
+        background: #f7f8f9;
+        content: attr(data-title);
+        display: block;
+        padding: 0.625em;
+        margin-bottom: 0.625em;
+        border-bottom: 1px solid rgb(190, 190, 190);
+        font-weight: bold;
+      }
+    }
+  }
+}
+.tooltip {
+  cursor: help;
+  &::after {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    margin-left: 5px;
+    vertical-align: top;
+    font-family: "Dashicons";
+    text-align: center;
+    content: "\f223";
+    speak: never;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    font-size: 120%;
+  }
+}
+/*
+.ui-tooltip,
+.arrow:after {
+  background: black;
+  border: 2px solid white;
+}
+.ui-tooltip {
+  padding: 10px 20px;
+  color: white;
+  border-radius: 20px;
+  // font: bold 14px "Helvetica Neue", Sans-Serif;
+  text-transform: uppercase;
+  box-shadow: 0 0 7px black;
+}
+.arrow {
+  width: 70px;
+  height: 16px;
+  overflow: hidden;
+  position: absolute;
+  left: 50%;
+  margin-left: -35px;
+  bottom: -16px;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: -20px;
+    width: 25px;
+    height: 25px;
+    box-shadow: 6px 5px 9px -9px black;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  &.top {
+    top: -16px;
+    bottom: auto;
+    &::after {
+      bottom: -20px;
+      top: auto;
+    }
+  }
+  &.left {
+    left: 20%;
+  }
+}
+*/

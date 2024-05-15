@@ -1,0 +1,24 @@
+.panel.mos_specification_options_panel {
+  padding: 10px;
+  .mos-specification-group-title {
+    .ui-accordion-header-icon {
+      -webkit-transition: all 0.3s ease-out;
+      -moz-transition: all 0.3s ease-out;
+      -o-transition: all 0.3s ease-out;
+      transition: all 0.3s ease-out;
+    }
+    &.ui-accordion-header-active,
+    &.ui-state-active {
+      .ui-accordion-header-icon {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  .mos-specification-add-group {
+    margin-top: 10px;
+  }
+  .mos-specification-remove {
+    text-align: right;
+  }
+}
