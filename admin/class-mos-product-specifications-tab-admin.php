@@ -263,7 +263,7 @@ class Mos_Product_Specifications_Tab_Admin {
 
 									?>
 								</fieldset>
-								<fieldset class="form-field mos-specification-remove"><a href="#" class="button button-warning mos-specification-remove-group"><?php echo esc_html__('Remove', 'wp-option-framework')?></a></fieldset>
+								<fieldset class="form-field mos-specification-remove"><a href="#" class="button button-warning mos-specification-remove-group"><?php echo esc_html__('Remove', 'mos-product-specifications-tab')?></a></fieldset>
 							</div>	
 						</div>
 					<?php endif?>
@@ -272,7 +272,7 @@ class Mos_Product_Specifications_Tab_Admin {
 		<?php endif?>
 		</div>
 		<input type="hidden" class="total-count" value="<?php echo esc_html($size) ?>" data-add="<?php echo esc_html__( 'Add', 'mos-product-specifications-tab' ); ?>" data-title="<?php echo esc_html__( 'Title', 'mos-product-specifications-tab' ); ?>" data-tooltip="<?php echo esc_html__( 'Tooltip', 'mos-product-specifications-tab' ); ?>" data-description="<?php echo esc_html__( 'Description', 'mos-product-specifications-tab' ); ?>">
-		<a href="#" class="button mos-specification-add-group"><?php echo esc_html__('Add more')?></a>
+		<a href="#" class="button mos-specification-add-group"><?php echo esc_html__('Add more', 'mos-product-specifications-tab')?></a>
 		</div>
 		<?php
 	}
@@ -284,9 +284,41 @@ class Mos_Product_Specifications_Tab_Admin {
 	public function mpst_save_product_tab_data( $post_id, $post, $update ) {
 		global $post;
 		if (isset($_POST['mos_specifications_tab_field']) && wp_verify_nonce($_POST['mos_specifications_tab_field'], 'mos_specifications_tab_action')) {
-			if(isset($_POST['_mos_specifications_data'])) update_post_meta( $post->ID, '_mos_specifications_data', $_POST['_mos_specifications_data'] );
-			else update_post_meta( $post->ID, '_mos_specifications_data', '' );
+			if(isset($_POST['_mos_specifications_data'])) {
+				$mos_specifications_data = $this->mpst_recursive_sanitize_array_field($_POST['_mos_specifications_data']);
+				update_post_meta( $post->ID, '_mos_specifications_data', $mos_specifications_data );
+			}
+			else {
+				update_post_meta( $post->ID, '_mos_specifications_data', '' );
+			}
 		}
+	}
+	
+	/**
+	 * Recursive sanitation for an array
+	 * 
+	 * @param $array
+	 *
+	 * @return mixed
+	 */
+	public function mpst_recursive_sanitize_array_field($array)
+	{
+		foreach ($array as $key => &$value) {
+			if (is_array($value)) {
+				$value = $this->mpst_recursive_sanitize_array_field($value);
+			} else {
+				if ($key == 'editor')
+					$value = wp_kses_post($value);
+				elseif ($key == 'url')
+					$value = sanitize_url($value);
+				elseif ($key == 'id')
+					$value = sanitize_text_field(filter_var($value, FILTER_SANITIZE_NUMBER_INT));
+				else
+					$value = sanitize_text_field($value);
+			}
+		}
+
+		return $array;
 	}
 	
 

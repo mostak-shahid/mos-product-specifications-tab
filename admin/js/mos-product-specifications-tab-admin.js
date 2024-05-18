@@ -40,7 +40,7 @@ jQuery(document).ready(function($) {
 			$(this).attr('name', name);
 		  });
 		});
-	  }
+	}
 
 	$('body').on('click', '.mos-specification-add-group', function( e ) {
 
