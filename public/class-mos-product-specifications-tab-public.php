@@ -59,7 +59,7 @@ class Mos_Product_Specifications_Tab_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mpst_enqueue_styles() {
+	public function mos_product_specifications_tab_enqueue_styles() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -83,7 +83,7 @@ class Mos_Product_Specifications_Tab_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mpst_enqueue_scripts() {
+	public function mos_product_specifications_tab_enqueue_scripts() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -100,7 +100,7 @@ class Mos_Product_Specifications_Tab_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mos-product-specifications-tab-public.js', array( 'jquery','jquery-ui-tooltip' ), $this->version, false );
 
 	}
-	public function mpst_woo_new_product_tab( $tabs ) {
+	public function mos_product_specifications_tab_woo_new_product_tab( $tabs ) {
 		// unset( $tabs['reviews'] );
 		
 		global $product;
@@ -109,8 +109,9 @@ class Mos_Product_Specifications_Tab_Public {
 			$tabs['mos_specifications_tab'] = array(
 				'title' 	=> esc_html__( 'Specifications', 'mos-product-specifications-tab' ),
 				'priority' 	=> 20,
-				//'callback'	=> 'mpst_woo_new_product_tab_content'
+				//'callback'	=> 'mos_product_specifications_tab_woo_new_product_tab_content'
 				'callback' 	=> function () use ($data) {
+					// var_dump($data);
 					// The new tab content		
 					echo '<h2 class="tab-title">'.esc_html__( 'Specifications', 'mos-product-specifications-tab' ).'</h2>';
 					echo '<div class="tab-intro">';
@@ -118,11 +119,12 @@ class Mos_Product_Specifications_Tab_Public {
 						echo '<table class="product-specifications-table"><tbody>';
 						foreach($data as $row) {
 							$tooltip = $class = '';
-							if (@$row['tooltip']) {
-								$tooltip = 'title="'.$row['tooltip'].'"';
-								$class = 'tooltip';
-							}
-							echo '<tr class="woocommerce-product-attributes-item"><th class="woocommerce-product-attributes-item__label '.esc_html($class).'" '.esc_html($tooltip).'>'.esc_html($row['title']).'</th><td class="woocommerce-product-attributes-item__value" data-title="'.esc_html($row['title']).'">'.wp_kses_post(wpautop(do_shortcode($row['editor']))).'</td></tr>';
+							echo '<tr class="woocommerce-product-attributes-item">';
+
+							echo (isset($row['tooltip']) && $row['tooltip'])?'<th class="woocommerce-product-attributes-item__label tooltip" title="'.esc_html($row['tooltip']).'">'.esc_html($row['title']).'</th>':'<th class="woocommerce-product-attributes-item__label">'.esc_html($row['title']).'</th>';
+
+							echo '<td class="woocommerce-product-attributes-item__value" data-title="'.esc_html($row['title']).'">'.wp_kses_post(wpautop(do_shortcode($row['editor']))).'</td>';
+							echo '</tr>';
 						}
 						echo '</table></tbody></table>';
 					echo '</div>';

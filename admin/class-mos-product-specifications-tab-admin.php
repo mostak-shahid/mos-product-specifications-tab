@@ -59,7 +59,7 @@ class Mos_Product_Specifications_Tab_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mpst_enqueue_styles() {
+	public function mos_product_specifications_tab_enqueue_styles() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -82,7 +82,7 @@ class Mos_Product_Specifications_Tab_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mpst_enqueue_scripts() {
+	public function mos_product_specifications_tab_enqueue_scripts() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -101,7 +101,7 @@ class Mos_Product_Specifications_Tab_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mos-product-specifications-tab-admin.js', array( 'jquery','jquery-ui-sortable', 'jquery-ui-accordion' ), $this->version, false );
 
 	}
-	public function mpst_woocommerce_check()
+	public function mos_product_specifications_tab_woocommerce_check()
 	{
 
 		if (current_user_can('activate_plugins')) {
@@ -199,7 +199,7 @@ class Mos_Product_Specifications_Tab_Admin {
 	 *
 	 * @return array $default_tabs
 	 */
-	public function mpst_product_edit_tab( $default_tabs ) {
+	public function mos_product_specifications_tab_product_edit_tab( $default_tabs ) {
 		global $post;
 		$tabs = array(
 			'mos_specifications_tab' => array(
@@ -217,7 +217,7 @@ class Mos_Product_Specifications_Tab_Admin {
 	 *
 	 * @return void
 	 */
-	public function mpst_product_tab_field() {
+	public function mos_product_specifications_tab_product_tab_field() {
 		wp_nonce_field('mos_specifications_tab_action', 'mos_specifications_tab_field');
 		$n = $size = 0;
 		global $woocommerce, $post;
@@ -231,7 +231,7 @@ class Mos_Product_Specifications_Tab_Admin {
 				<?php foreach($specifications_data as $key => $data) : ?>
 					<?php if ($key!='_nonce') :  ?>
 						<div class="mos-specification-group">
-							<h4 class="mos-specification-group-title"><span class="text"><?php echo (isset($data['title']))?esc_html($data['title']):esc_html__('Add', $plugin_name) ?></span></h4>
+							<h4 class="mos-specification-group-title"><span class="text"><?php echo (isset($data['title']))?esc_html($data['title']):esc_html__('Add', 'mos-product-specifications-tab') ?></span></h4>
 							<div class="mos-specification-group-content">
 								<fieldset class="form-field">
 									<label for="mos-specifications-data-title-<?php echo esc_html($n) ?>"><?php echo esc_html__( 'Title', 'mos-product-specifications-tab' ); ?></label>
@@ -281,11 +281,13 @@ class Mos_Product_Specifications_Tab_Admin {
 	 *
 	 * @return boolean
 	 */
-	public function mpst_save_product_tab_data( $post_id, $post, $update ) {
+	public function mos_product_specifications_tab_save_product_tab_data( $post_id, $post, $update ) {
 		global $post;
-		if (isset($_POST['mos_specifications_tab_field']) && wp_verify_nonce($_POST['mos_specifications_tab_field'], 'mos_specifications_tab_action')) {
+			
+		if (isset($_POST['mos_specifications_tab_field']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['mos_specifications_tab_field'])), 'mos_specifications_tab_action')) {
 			if(isset($_POST['_mos_specifications_data'])) {
-				$mos_specifications_data = $this->mpst_recursive_sanitize_array_field($_POST['_mos_specifications_data']);
+
+				$mos_specifications_data = $this->mos_product_specifications_tab_recursive_sanitize_array_field($_POST['_mos_specifications_data']);
 				update_post_meta( $post->ID, '_mos_specifications_data', $mos_specifications_data );
 			}
 			else {
@@ -301,11 +303,11 @@ class Mos_Product_Specifications_Tab_Admin {
 	 *
 	 * @return mixed
 	 */
-	public function mpst_recursive_sanitize_array_field($array)
+	public function mos_product_specifications_tab_recursive_sanitize_array_field($array)
 	{
 		foreach ($array as $key => &$value) {
 			if (is_array($value)) {
-				$value = $this->mpst_recursive_sanitize_array_field($value);
+				$value = $this->mos_product_specifications_tab_recursive_sanitize_array_field($value);
 			} else {
 				if ($key == 'editor')
 					$value = wp_kses_post($value);

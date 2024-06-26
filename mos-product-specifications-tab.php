@@ -41,7 +41,7 @@ define( 'MOS_PRODUCT_SPECIFICATIONS_TAB_VERSION', '1.0.0' );
  * The code that runs during plugin activation.
  * This action is documented in includes/class-mos-product-specifications-tab-activator.php
  */
-function mpst_activate_mos_product_specifications_tab() {
+function mos_product_specifications_tab_activate() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-mos-product-specifications-tab-activator.php';
 	Mos_Product_Specifications_Tab_Activator::activate();
 }
@@ -50,13 +50,13 @@ function mpst_activate_mos_product_specifications_tab() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-mos-product-specifications-tab-deactivator.php
  */
-function mpst_deactivate_mos_product_specifications_tab() {
+function mos_product_specifications_tab_deactivate() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-mos-product-specifications-tab-deactivator.php';
 	Mos_Product_Specifications_Tab_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'mpst_activate_mos_product_specifications_tab' );
-register_deactivation_hook( __FILE__, 'mpst_deactivate_mos_product_specifications_tab' );
+register_activation_hook( __FILE__, 'mos_product_specifications_tab_activate' );
+register_deactivation_hook( __FILE__, 'mos_product_specifications_tab_deactivate' );
 
 /**
  * The core plugin class that is used to define internationalization,
@@ -73,10 +73,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-mos-product-specifications
  *
  * @since    1.0.0
  */
-function mpst_run_mos_product_specifications_tab() {
+function mos_product_specifications_tab_run() {
 
 	$plugin = new Mos_Product_Specifications_Tab();
 	$plugin->run();
 
 }
-mpst_run_mos_product_specifications_tab();
+mos_product_specifications_tab_run();

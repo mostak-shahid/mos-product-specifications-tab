@@ -158,15 +158,15 @@ class Mos_Product_Specifications_Tab {
 		$plugin_admin = new Mos_Product_Specifications_Tab_Admin( $this->get_plugin_name(), $this->get_version() );
 		
 		if (!is_plugin_active('woocommerce/woocommerce.php')) {
-			$this->loader->add_action('admin_notices', $plugin_admin, 'mpst_woocommerce_check');
+			$this->loader->add_action('admin_notices', $plugin_admin, 'mos_product_specifications_tab_woocommerce_check');
 			add_action("wp_ajax_woocommerce_ajax_install_plugin", "wp_ajax_install_plugin");
 		}
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'mpst_enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'mpst_enqueue_scripts' );
-		$this->loader->add_action( 'woocommerce_product_data_tabs', $plugin_admin, 'mpst_product_edit_tab', 10, 1 );
-		$this->loader->add_action( 'woocommerce_product_data_panels', $plugin_admin, 'mpst_product_tab_field');
-		$this->loader->add_action( 'save_post', $plugin_admin, 'mpst_save_product_tab_data', 10, 3 );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'mos_product_specifications_tab_enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'mos_product_specifications_tab_enqueue_scripts' );
+		$this->loader->add_action( 'woocommerce_product_data_tabs', $plugin_admin, 'mos_product_specifications_tab_product_edit_tab', 10, 1 );
+		$this->loader->add_action( 'woocommerce_product_data_panels', $plugin_admin, 'mos_product_specifications_tab_product_tab_field');
+		$this->loader->add_action( 'save_post', $plugin_admin, 'mos_product_specifications_tab_save_product_tab_data', 10, 3 );
 
 	}
 
@@ -181,9 +181,9 @@ class Mos_Product_Specifications_Tab {
 
 		$plugin_public = new Mos_Product_Specifications_Tab_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'mpst_enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'mpst_enqueue_scripts' );		
-		$this->loader->add_filter( 'woocommerce_product_tabs', $plugin_public, 'mpst_woo_new_product_tab' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'mos_product_specifications_tab_enqueue_styles' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'mos_product_specifications_tab_enqueue_scripts' );		
+		$this->loader->add_filter( 'woocommerce_product_tabs', $plugin_public, 'mos_product_specifications_tab_woo_new_product_tab' );
 
 	}
 
