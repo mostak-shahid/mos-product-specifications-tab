@@ -125,6 +125,8 @@ class Mos_Product_Specifications_Tab {
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-mos-product-specifications-tab-public.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-class-mos-product-specifications-tab-simple-product-template.php';
+
 		$this->loader = new Mos_Product_Specifications_Tab_Loader();
 
 	}

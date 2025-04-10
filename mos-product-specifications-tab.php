@@ -13,7 +13,7 @@
  * @package           Mos_Product_Specifications_Tab
  *
  * @wordpress-plugin
- * Plugin Name:       Product specifications tab for WooCommerce
+ * Plugin Name:       Mos Product Specifications Tab
  * Plugin URI:        https://www.mdmostakshahid.com/mos-product-specifications-tab/
  * Description:       You can add an infinite number of specs to any or all of your products using the Product specifications tab for WooCommerce plugin. You can add any kind of information to the product using the WYSIWYG editor available to each group. The options are unlimited.
  * Version:           1.0.0

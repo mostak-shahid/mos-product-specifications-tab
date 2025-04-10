@@ -98,6 +98,16 @@ class Mos_Product_Specifications_Tab_Admin {
 		wp_enqueue_script('jquery-ui-sortable');
 		wp_enqueue_script('jquery-ui-accordion');
 		wp_enqueue_editor();
+
+		wp_enqueue_script($this->plugin_name . '-ajax', plugin_dir_url(__DIR__) . 'assets/js/mos-product-specifications-tab-ajax.js', array('jquery'), $this->version, false);
+
+		$mos_product_specifications_tab_ajax_params = array(
+			'ajax_url' => admin_url('admin-ajax.php'),
+			'mos_product_specifications_tab_security' => esc_attr(wp_create_nonce('mos_product_specifications_tab_security_nonce')),
+			'mos_product_specifications_tab_install_plugin_wpnonce' => esc_attr(wp_create_nonce('updates')),
+		);
+		wp_localize_script($this->plugin_name . '-ajax', 'mos_product_specifications_tab_ajax_obj', $mos_product_specifications_tab_ajax_params);
+
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mos-product-specifications-tab-admin.js', array( 'jquery','jquery-ui-sortable', 'jquery-ui-accordion' ), $this->version, false );
 
 	}
@@ -119,37 +129,6 @@ class Mos_Product_Specifications_Tab_Admin {
 					</p>
 					<p><a id="woocommerce_install" class="install-now button" data-plugin-slug="woocommerce"><?php echo esc_html__('Install Now', 'mos-product-specifications-tab'); ?></a></p>
 				</div>
-
-				<script>
-					jQuery(document).on('click', '#woocommerce_install', function(e) {
-						e.preventDefault();
-						var current = jQuery(this);
-						var plugin_slug = current.attr("data-plugin-slug");
-						var ajax_url = '<?php echo esc_url(admin_url('admin-ajax.php')) ?>';
-
-						current.addClass('updating-message').text('Installing...');
-
-						var data = {
-							action: 'woocommerce_ajax_install_plugin',
-							_ajax_nonce: '<?php echo esc_html(wp_create_nonce('updates')); ?>',
-							slug: plugin_slug,
-						};
-
-						jQuery.post(ajax_url, data, function(response) {
-								current.removeClass('updating-message');
-								current.addClass('updated-message').text('Installing...');
-								current.attr("href", response.data.activateUrl);
-							})
-							.fail(function() {
-								current.removeClass('updating-message').text('Install Failed');
-							})
-							.always(function() {
-								current.removeClass('install-now updated-message').addClass('activate-now button-primary').text('Activating...');
-								current.unbind(e);
-								current[0].click();
-							});
-					});
-				</script>
 
 			<?php
 			} elseif (!is_plugin_active('woocommerce/woocommerce.php') && file_exists(WP_PLUGIN_DIR . '/woocommerce/woocommerce.php')) {

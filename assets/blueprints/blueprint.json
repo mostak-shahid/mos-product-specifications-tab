@@ -1,0 +1,51 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/wp-admin/",
+  "preferredVersions": {
+    "php": "7.4",
+    "wp": "latest"
+  },
+  "phpExtensionBundles": ["kitchen-sink"],
+  "steps": [
+    {
+      "step": "login",
+      "username": "admin",
+      "password": "password"
+    },
+    {
+      "step": "installTheme",
+      "themeZipFile": {
+        "resource": "wordpress.org/themes",
+        "slug": "storefront"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginZipFile": {
+        "resource": "wordpress.org/plugins",
+        "slug": "woocommerce"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginZipFile": {
+        "resource": "wordpress.org/plugins",
+        "slug": "mos-product-specifications-tab"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require_once 'wordpress/wp-load.php'; require_once 'wordpress/plugins/woocommerce/includes/class-wc-product-simple.php'; $product = new WC_Product_Simple(); $product->set_name( 'Wizard Hat' );$product->set_slug( 'medium-size-wizard-hat-in-new-york' );$product->set_regular_price( 500.00 );$product->set_short_description( '<p>Here it is... A WIZARD HAT!</p><p>Only here and now.</p>' );$product->save();?>"
+    }
+  ]
+}
+

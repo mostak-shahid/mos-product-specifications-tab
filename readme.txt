@@ -2,7 +2,7 @@
 Contributors: Md. Mostak Shahid
 Tags: Product specifications tab, WooCommerce specifications tab, Specifications tab for WooCommerce, Specifications tab for Product, Custom Product Tab
 Requires at least: 4.0
-Tested up to: 6.5
+Tested up to: 6.6.1
 Requires PHP: 7.0
 Stable tag: 1.0.0
 License: GPLv2 or later
@@ -100,4 +100,4 @@ This plugin has drag-and-drop features, so you can re-order them very easily.
 
 == Changelog ==
 = 1.0.0 =
-* Basic version
+* Initial Release.
