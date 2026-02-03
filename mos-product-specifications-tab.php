@@ -95,7 +95,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
  */
 function mos_product_specifications_tab_run()
 {
-	$plugin = new \MosPress\MosProductSpecificationsTab\Core\MosProductSpecificationsTab();
+	$plugin = new \MosPress\MosProductSpecificationsTab\Core\Plugin();
 	// $plugin->run();
 }
 mos_product_specifications_tab_run();

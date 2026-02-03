@@ -35,7 +35,7 @@ use MosPress\MosProductSpecificationsTab\Hook\Filter_Hook;
  * @subpackage Mos_Product_Specifications_Tab/includes
  * @author     Programmelab <mostak.shahid@gmail.com>
  */
-class MosProductSpecificationsTab
+class Plugin
 {
 
 	/**
