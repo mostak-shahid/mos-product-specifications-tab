@@ -1,31 +1,18 @@
 <?php
-
 /**
- * Fired when the plugin is uninstalled.
+ * Uninstall Plugin
  *
- * When populating this file, consider the following flow
- * of control:
+ * Fired when the plugin is uninstalled (deleted from WordPress admin).
+ * This file is called automatically by WordPress.
  *
- * - This method should be static
- * - Check if the $_REQUEST content actually is the plugin name
- * - Run an admin referrer check to make sure it goes through authentication
- * - Verify the output of $_GET makes sense
- * - Repeat with other user roles. Best directly by using the links/query string parameters.
- * - Repeat things for multisite. Once for a single site in the network, once sitewide.
- *
- * This file may be updated more in future version of the Boilerplate; however, this is the
- * general skeleton and outline for how the file should work.
- *
- * For more information, see the following discussion:
- * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
- *
- * @link       https://www.mdmostakshahid.com/
- * @since      1.0.0
- *
- * @package    Mos_Product_Specifications_Tab
+ * @package MosProductSpecificationsTab
  */
 
-// If uninstall not called from WordPress, then exit.
+// If uninstall not called from WordPress, exit
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-	exit;
+    exit;
+}
+$options = mos_product_specifications_tab_get_option();
+if (isset($options['tools']['delete_data_on']) && $options['tools']['delete_data_on'] == 'delete') {
+    mos_product_specifications_tab_data_cleanup();
 }

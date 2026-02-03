@@ -1,0 +1,10 @@
+{
+    "basic": {
+      "text": "",
+      "textarea": "",
+      "radio": "radio-1"
+    },
+    "array": {
+      "checkbox": ["checkbox-1", "checkbox-3"]
+    }
+  }

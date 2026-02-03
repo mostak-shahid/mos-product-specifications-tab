@@ -1,32 +1,34 @@
 {
   "$schema": "https://playground.wordpress.net/blueprint-schema.json",
-  "landingPage": "/wp-admin/",
+  "landingPage": "/wp-admin/admin.php?page=mos-product-specifications-tab#/",
   "preferredVersions": {
-    "php": "7.4",
+    "php": "8.2",
     "wp": "latest"
   },
-  "phpExtensionBundles": ["kitchen-sink"],
+  "features": {
+    "networking": true
+  },
+  "phpExtensionBundles": [
+    "kitchen-sink"
+  ],
+  "meta": {
+    "title": "Mos Product Specifications Tab Plugin Blueprint",
+    "description": "Security Plugin by Programmelab",
+    "author": "Programmelab",
+    "categories": [
+      "security",
+      "Plugin"
+    ]
+  },
   "steps": [
     {
-      "step": "login",
-      "username": "admin",
-      "password": "password"
+      "step": "login"
     },
     {
       "step": "installTheme",
       "themeZipFile": {
         "resource": "wordpress.org/themes",
-        "slug": "storefront"
-      },
-      "options": {
-        "activate": true
-      }
-    },
-    {
-      "step": "installPlugin",
-      "pluginZipFile": {
-        "resource": "wordpress.org/plugins",
-        "slug": "woocommerce"
+        "slug": "astra"
       },
       "options": {
         "activate": true
@@ -43,9 +45,10 @@
       }
     },
     {
-      "step": "runPHP",
-      "code": "<?php require_once 'wordpress/wp-load.php'; require_once 'wordpress/plugins/woocommerce/includes/class-wc-product-simple.php'; $product = new WC_Product_Simple(); $product->set_name( 'Wizard Hat' );$product->set_slug( 'medium-size-wizard-hat-in-new-york' );$product->set_regular_price( 500.00 );$product->set_short_description( '<p>Here it is... A WIZARD HAT!</p><p>Only here and now.</p>' );$product->save();?>"
+      "step": "setSiteOptions",
+      "options": {
+        "blogname": "Mos Product Specifications Tab Demo"
+      }
     }
   ]
 }
-
