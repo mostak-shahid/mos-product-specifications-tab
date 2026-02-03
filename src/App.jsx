@@ -9,7 +9,7 @@ import { IconStar, IconSetting, IconHome, IconMember, IconBookStroked, IconHelpC
 import { LocaleProvider } from '@douyinfe/semi-ui';
 import en_US from "@douyinfe/semi-ui/lib/es/locale/source/en_US";
 
-import { Dashboard, About, Contact, Settings, ImportExport, More, Tools, Logs, LogsCharts, LogsTable, Feedback, FreeVsPro, NotFound} from './pages';
+import { Dashboard, General, About, Contact, Settings, ImportExport, More, Tools, Logs, LogsCharts, LogsTable, Feedback, FreeVsPro, NotFound} from './pages';
 
 import {
     BasicInputs, 
@@ -83,36 +83,6 @@ function App() {
 
     const HorizontalMenuItems = [
         { itemKey: 'dashboard', text: 'Dashboard', icon: <IconHome />, url: '/' },
-        { 
-            itemKey: 'layouts', 
-            text: 'Layouts', 
-            icon: <IconTemplate />,
-            url: '/layouts',
-            items: [
-                { itemKey: 'about', text: 'About', url: '/about' },
-                { itemKey: 'contact', text: 'Contact', url: '/contact' },
-                { 
-                    itemKey: 'layouts-boxed', 
-                    text: 'Boxed Layouts', 
-                    url: '/layouts/boxed',
-                    items: [
-                        { itemKey: 'layouts-boxed-nosidebar', text: 'No Sidebar', url: '/layouts/boxed/nosidebar' },
-                        { itemKey: 'layouts-boxed-left-sidebar', text: 'Left Sidebar', url: '/layouts/boxed/left-sidebar' },
-                        { itemKey: 'layouts-boxed-right-sidebar', text: 'Right Sidebar', url: '/layouts/boxed/right-sidebar' },
-                    ] 
-                },
-                { 
-                    itemKey: 'layouts-full', 
-                    text: 'Full Layouts', 
-                    url: '/layouts/full',
-                    items: [
-                        { itemKey: 'layouts-full-nosidebar', text: 'No Sidebar', url: '/layouts/full/nosidebar' },
-                        { itemKey: 'layouts-full-left-sidebar', text: 'Left Sidebar', url: '/layouts/full/left-sidebar' },
-                        { itemKey: 'layouts-full-right-sidebar', text: 'Right Sidebar', url: '/layouts/full/right-sidebar' },
-                    ] 
-                },
-            ] 
-        },
         { itemKey: 'settings', text: 'Settings', icon: <IconSetting />, url: '/settings' },
         { itemKey: 'feedback', text: 'Feedback', icon: <IconStar />, url: '/feedback' },
 
@@ -217,25 +187,10 @@ function App() {
                 </Header>
                 <Routes>
                     <Route path="/" element={<Dashboard />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/contact" element={<Contact />} />
-
-                    <Route path="/layouts">
-                        <Route index element={<Navigate to="boxed/nosidebar" replace />} />
-                        <Route path="boxed/nosidebar" element={<BoxedNoSidebar />} />
-                        <Route path="boxed/left-sidebar" element={<BoxedLeftSidebar />} />
-                        <Route path="boxed/right-sidebar" element={<BoxedRightSidebar />} />
-                        <Route path="full/nosidebar" element={<FullWidthNoSidebar />} />
-                        <Route path="full/left-sidebar" element={<FullWidthLeftSidebar />} />
-                        <Route path="full/right-sidebar" element={<FullWidthRightSidebar />} />
-                    </Route>
                     
                     <Route path="/settings" element={<Settings />}>
-                        <Route index element={<Navigate to="basic-inputs" replace />} />
-                        <Route path="basic-inputs" element={<BasicInputs />} />
-                        <Route path="array-inputs" element={<ArrayInputs />} />
-                        <Route path="page/page-1" element={<Page />} />
-                        <Route path="page/page-2" element={<Page />} />
+                        <Route index element={<Navigate to="general" replace />} />
+                        <Route path="general" element={<General />} />
                         
                         {/* Other menu items */}
                         <Route path="import-export" element={<ImportExport />} />

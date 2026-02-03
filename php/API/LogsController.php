@@ -237,18 +237,20 @@ class LogsController
         $total = (int) $wpdb->get_var( $count_query );
 
         /**
-         * Data query
+         * Data query - add per_page and offset to params
          */
+        $data_query_params = $where_params;
+        $data_query_params[] = $per_page;
+        $data_query_params[] = $offset;
+        
         $data_query = $wpdb->prepare(
             "SELECT l.*, u.display_name AS user_name, u.user_login, u.user_email
             FROM {$logs_table_name} l
             LEFT JOIN {$wpdb->users} u ON l.user_id = u.ID
             WHERE {$prepared_where}
-            ORDER BY {$wpdb->prefix}mos_product_specifications_tab_logs.{$orderby} {$order}
+            ORDER BY l.{$orderby} {$order}
             LIMIT %d OFFSET %d",
-            ...$where_params,
-            $per_page,
-            $offset
+            ...$data_query_params,
         );
 
         $results = $wpdb->get_results( $data_query, ARRAY_A );

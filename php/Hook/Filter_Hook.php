@@ -92,47 +92,12 @@ class Filter_Hook {
      * Default options filter (still dynamic)
      */
     public function modify_mos_product_specifications_tab_default_options( $opts ) {
-        $defaults = [
-            'page' => [
-                'background' => [],
-                'boxshadow' => [
-                    'enabled' => false,
-                    'inset' => false,
-                ],
-                // 'color' => '#ffffff',
-                'color' => '',
-                // 'gradient' => 'linear-gradient(135deg, #ff8c00 0%, #fcff41 100%)',
-                'gradient' => '',
-                'font' => [
-                    'enabled' => false,
-                ],
-                'media_uploader' => [],
-                'multicolor' => [],
-                'repeatable_field' => [
-                    ['address' => '123 Main St, Cityville, Country' ],
-                    ['address' => '456 Side St, Townsville, Country' ],
-                ],
-                'textshadow' => [
-                    'enabled' => false,
-                ],
-                'unitcontrol' => '',
-            ],
-            'basic' => [
-                'text' => '',
-                'textarea' => '',
-                'radio' => 'radio-1',
-                'select' => 'select-2',
-                'number' => 10,
-                'color' => '#ff0000',
-                'checkbox' => true,
-                'switch' => true,
-                'date' => '',
-                'time' => '',
-                'datetime' => '',
-
-            ],
-            'array' => [
-                'checkbox' => ['checkbox-1', 'checkbox-3']
+        $defaults = [            
+            'general' => [
+                'enable' => true,
+                'table_position' => '',
+                'group_icon' => false,
+                'group_title' => false,
             ],
             'more' => [
                 'enable_scripts' => false,

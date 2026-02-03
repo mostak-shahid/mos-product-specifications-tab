@@ -1,35 +1,10 @@
 [
+    
     {
-        "itemKey": "page",
-        "text": "Page",
-        "description": "Page settings",
-        "url": "/settings/page",
-        "items": [
-            {
-                "itemKey": "page-1",
-                "text": "Page 1",
-                "description": "Page 1 settings",
-                "url": "/settings/page/page-1"
-            },
-            {
-                "itemKey": "page-2",
-                "text": "Page 2",
-                "description": "Page 2 settings",
-                "url": "/settings/page/page-2"
-            }
-        ]
-    },
-    {
-        "itemKey": "basic-inputs",
-        "text": "Basic Inputs",
-        "description": "Basic input settings",
-        "url": "/settings/basic-inputs"
-    },
-    {
-        "itemKey": "array-inputs",
-        "text": "Array Inputs",
-        "description": "Array input settings",
-        "url": "/settings/array-inputs"
+        "itemKey": "general",
+        "text": "General",
+        "description": "General",
+        "url": "/settings/general"
     },
     {
         "itemKey": "import-export",
