@@ -40,10 +40,10 @@ export default function Dashboard() {
                 >
                     <Title heading={2}>{__(`Welcome to ${Details?.name}`, "mos-product-specifications-tab")}</Title>
                     <Paragraph>
-                        {__("Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste mollitia voluptates molestiae nihil! Atque repellendus, nulla, aut magni in, sunt optio labore commodi at ipsa voluptatibus provident eveniet perferendis consequuntur.", "mos-product-specifications-tab")}
+                        {__("You can add an infinite number of specs to any or all of your products using the Product specifications tab for WooCommerce plugin. You can add any kind of information to the product using the WYSIWYG editor available to each group. The options are unlimited.", "mos-product-specifications-tab")}
                     </Paragraph>
                     <Paragraph>
-                        {__("Mos Product Specifications Tab is an all-in-one toolkit to enhance your WooCommerce store. This is a highly effective plugin developed for assisting online businesses in improving sales and profits.", "mos-product-specifications-tab")}
+                        {__("When selling products online, it’s important to provide customers with full product details to help them make informed purchase decisions. WooCommerce product specifications are an excellent way to display details in an orderly manner. They give give shoppers all the product insights quickly and with less clutter.", "mos-product-specifications-tab")}
                     </Paragraph>
                 </Card>
                 <Row type="flex" gutter={[24,24]}>
