@@ -52,9 +52,12 @@ class Admin
 	 */
 	public function __construct($plugin_name, $version)
 	{
-
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+
+		add_action( 'woocommerce_product_data_tabs', [$this, 'mpst_product_edit_tab'], 10, 1 );
+		add_action( 'woocommerce_product_data_panels', [$this, 'mpst_product_tab_field']);
+		add_action( 'save_post', [$this, 'mpst_save_product_tab_data'], 10, 3 );
 	}
 
 	/**
@@ -131,6 +134,22 @@ class Admin
 				'before'
 			);
 		}
+		    // Get current admin screen
+		$screen = get_current_screen();
+
+		// WooCommerce product edit & add new product pages
+		if (
+			$screen->post_type === 'product' &&
+			in_array($screen->base, ['post', 'post-new'])
+		) {
+			wp_enqueue_script(
+				$this->plugin_name . '-product-edit',
+				MOS_PRODUCT_SPECIFICATIONS_TAB_URL . 'build/product-edit.js',
+				array('wp-element', 'wp-components', 'wp-api-fetch', 'wp-i18n', 'wp-media-utils', 'wp-block-editor', 'react', 'react-dom'),
+				$this->version,
+				true
+			);
+		}
 
 		wp_enqueue_script($this->plugin_name . '-admin-ajax', MOS_PRODUCT_SPECIFICATIONS_TAB_URL . 'admin/js/admin-ajax.js', array('jquery'), $this->version, false);
 		wp_enqueue_script($this->plugin_name . '-admin-script', MOS_PRODUCT_SPECIFICATIONS_TAB_URL . 'admin/js/admin-script.js', array('jquery'), $this->version, false);
@@ -156,6 +175,59 @@ class Admin
 			$ajax_params['proVersion'] = $version;
 		}
 		wp_localize_script($this->plugin_name . '-admin-ajax', 'mos_product_specifications_tab_ajax_obj', $ajax_params);
+	}
+
+	/**
+	 * Product Add/Edit custom tabs
+	 *
+	 * @param array $default_tabs tabs.
+	 *
+	 * @return array $default_tabs
+	 */
+	public function mpst_product_edit_tab( $default_tabs ) {
+		global $post;
+		$tabs = array(
+			'mos_specifications_tab' => array(
+				'label'       => esc_html__( 'Specifications', 'mos-product-specifications-tab' ),
+				'target'      => 'mos_specifications_tab', // ID of tab field
+				'priority'    => 60,
+				'class'       => array(),
+			),
+		);
+		$default_tabs = array_merge( $default_tabs, $tabs );
+		return $default_tabs;
+	}
+	/**
+	 * Product Add/Edit custom tab field
+	 *
+	 * @return void
+	 */
+	public function mpst_product_tab_field() {
+		wp_nonce_field('mos_specifications_tab_action', 'mos_specifications_tab_field');
+		?>
+		
+		<?php
+		$n = $size = 0;
+		global $woocommerce, $post;
+		$specifications_data = get_post_meta( $post->ID, '_mos_specifications_data', true );
+		if (is_array($specifications_data)) ksort($specifications_data);
+		?>
+		<div id="mos_specifications_tab" class="panel woocommerce_options_panel mos_specification_options_panel">
+			<div id="mos-product-specifications-tab-groups">Loading...</div>
+		</div>
+		<?php
+	}
+	/**
+	 * Save custom data
+	 *
+	 * @return boolean
+	 */
+	public function mpst_save_product_tab_data( $post_id, $post, $update ) {
+		global $post;
+		if (isset($_POST['mos_specifications_tab_field']) && wp_verify_nonce($_POST['mos_specifications_tab_field'], 'mos_specifications_tab_action')) {
+			if(isset($_POST['_mos_specifications_data'])) update_post_meta( $post->ID, '_mos_specifications_data', $_POST['_mos_specifications_data'] );
+			else update_post_meta( $post->ID, '_mos_specifications_data', '' );
+		}
 	}
 }
 

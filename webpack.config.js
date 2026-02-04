@@ -6,7 +6,8 @@ module.exports = {
     ...defaultConfig,
 
     entry: {
-        index: './src/index.jsx'
+        index: './src/index.jsx',
+        'product-edit': './src/product-edit/index.jsx'
     },
 
     output: {
