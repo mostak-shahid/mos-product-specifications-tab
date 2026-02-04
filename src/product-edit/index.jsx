@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import { Card, Button, Input, TextArea, Toast, Popover, Space, Typography, Icon } from '@douyinfe/semi-ui';
-import { IconPlus, IconMinus, IconSetting, IconHelpCircle, IconCopy, IconDelete } from '@douyinfe/semi-icons';
+import { IconPlus, IconMinus, IconChevronUp, IconChevronDown, IconHelpCircle, IconCopy, IconDelete } from '@douyinfe/semi-icons';
 import './index.scss';
+
+const { Text } = Typography;
 // Configure apiFetch with REST API settings
 // WordPress automatically uses window.wpApiSettings if available
 // Fallback to manual configuration if needed
@@ -19,13 +21,10 @@ if (typeof window.wpApiSettings !== 'undefined') {
     apiFetch.use(apiFetch.createRootURLMiddleware(window.wpApiSettings.root));
     apiFetch.use(apiFetch.createNonceMiddleware(window.wpApiSettings.nonce));
 }
-const { Text } = Typography;
-
 export default function ProductSpecificationsEdit() {
     const [loading, setLoading] = useState(true);
     const [groups, setGroups] = useState([]);
     const [productId, setProductId] = useState(null);
-    const [draggedItem, setDraggedItem] = useState(null);
 
     useEffect(() => {
         const productIdElement = document.querySelector('#post_ID');
@@ -90,6 +89,20 @@ export default function ProductSpecificationsEdit() {
         setGroups(updatedGroups);
     };
 
+    const moveGroupUp = (groupIndex) => {
+        if (groupIndex === 0) return;
+        const updatedGroups = [...groups];
+        [updatedGroups[groupIndex - 1], updatedGroups[groupIndex]] = [updatedGroups[groupIndex], updatedGroups[groupIndex - 1]];
+        setGroups(updatedGroups);
+    };
+
+    const moveGroupDown = (groupIndex) => {
+        if (groupIndex === groups.length - 1) return;
+        const updatedGroups = [...groups];
+        [updatedGroups[groupIndex], updatedGroups[groupIndex + 1]] = [updatedGroups[groupIndex + 1], updatedGroups[groupIndex]];
+        setGroups(updatedGroups);
+    };
+
     const addSpecification = (groupIndex) => {
         const newSpecification = {
             title: '',
@@ -122,48 +135,20 @@ export default function ProductSpecificationsEdit() {
         setGroups(updatedGroups);
     };
 
-    const handleDragStart = (e, type, groupIndex, specIndex = null) => {
-        setDraggedItem({ type, groupIndex, specIndex });
-        e.dataTransfer.effectAllowed = 'move';
-        e.target.style.opacity = '0.5';
+    const moveSpecificationUp = (groupIndex, specIndex) => {
+        if (specIndex === 0) return;
+        const updatedGroups = [...groups];
+        const specs = updatedGroups[groupIndex].specifications;
+        [specs[specIndex - 1], specs[specIndex]] = [specs[specIndex], specs[specIndex - 1]];
+        setGroups(updatedGroups);
     };
 
-    const handleDragOver = (e, type, groupIndex, specIndex = null) => {
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'move';
-    };
-
-    const handleDragEnd = (e) => {
-        e.target.style.opacity = '1';
-        setDraggedItem(null);
-    };
-
-    const handleDrop = (e, targetType, targetGroupIndex, targetSpecIndex = null) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        if (!draggedItem) return;
-
-        const { type: sourceType, groupIndex: sourceGroupIndex, specIndex: sourceSpecIndex } = draggedItem;
-
-        if (sourceType === 'group' && targetType === 'group') {
-            if (sourceGroupIndex === targetGroupIndex) return;
-
-            const updatedGroups = [...groups];
-            const [movedGroup] = updatedGroups.splice(sourceGroupIndex, 1);
-            updatedGroups.splice(targetGroupIndex, 0, movedGroup);
-            setGroups(updatedGroups);
-        } else if (sourceType === 'specification' && targetType === 'specification' && sourceGroupIndex === targetGroupIndex) {
-            if (sourceSpecIndex === targetSpecIndex) return;
-
-            const updatedGroups = [...groups];
-            const specs = updatedGroups[targetGroupIndex].specifications;
-            const [movedSpec] = specs.splice(sourceSpecIndex, 1);
-            specs.splice(targetSpecIndex, 0, movedSpec);
-            setGroups(updatedGroups);
-        }
-
-        setDraggedItem(null);
+    const moveSpecificationDown = (groupIndex, specIndex) => {
+        const updatedGroups = [...groups];
+        const specs = updatedGroups[groupIndex].specifications;
+        if (specIndex === specs.length - 1) return;
+        [specs[specIndex], specs[specIndex + 1]] = [specs[specIndex + 1], specs[specIndex]];
+        setGroups(updatedGroups);
     };
 
     if (loading) {
@@ -174,14 +159,6 @@ export default function ProductSpecificationsEdit() {
         <div className="mos-specifications-editor">
             <div className="mos-spec-header">
                 <h3>{__('Product Specifications', 'mos-product-specifications-tab')}</h3>
-                <Button
-                    theme="solid"
-                    type="primary"
-                    onClick={addGroup}
-                    icon={<IconPlus />}
-                >
-                    {__('Add Group', 'mos-product-specifications-tab')}
-                </Button>
             </div>
 
             <input
@@ -198,22 +175,22 @@ export default function ProductSpecificationsEdit() {
                         key={groupIndex}
                         group={group}
                         groupIndex={groupIndex}
+                        totalGroups={groups.length}
                         onUpdate={updateGroup}
                         onRemove={removeGroup}
                         onDuplicate={duplicateGroup}
+                        onMoveUp={moveGroupUp}
+                        onMoveDown={moveGroupDown}
                         onAddSpecification={addSpecification}
                         onUpdateSpecification={updateSpecification}
                         onRemoveSpecification={removeSpecification}
                         onDuplicateSpecification={duplicateSpecification}
-                        onDragStart={handleDragStart}
-                        onDragOver={handleDragOver}
-                        onDragEnd={handleDragEnd}
-                        onDrop={handleDrop}
-                        draggedItem={draggedItem}
+                        onMoveSpecificationUp={moveSpecificationUp}
+                        onMoveSpecificationDown={moveSpecificationDown}
                     />
                 ))}
 
-                {groups.length === 0 && (
+                {/* {groups.length === 0 && (
                     <div className="mos-spec-empty">
                         <p>{__('No specifications yet. Add a group to get started.', 'mos-product-specifications-tab')}</p>
                         <Button
@@ -225,7 +202,17 @@ export default function ProductSpecificationsEdit() {
                             {__('Add First Group', 'mos-product-specifications-tab')}
                         </Button>
                     </div>
-                )}
+                )} */}
+            </div>
+            <div>
+                <Button
+                    theme="solid"
+                    type="primary"
+                    onClick={addGroup}
+                    icon={<IconPlus />}
+                >
+                    {__('Add Group', 'mos-product-specifications-tab')}
+                </Button>
             </div>
         </div>
     );
@@ -234,80 +221,96 @@ export default function ProductSpecificationsEdit() {
 function GroupCard({
     group,
     groupIndex,
+    totalGroups,
     onUpdate,
     onRemove,
     onDuplicate,
+    onMoveUp,
+    onMoveDown,
     onAddSpecification,
     onUpdateSpecification,
     onRemoveSpecification,
     onDuplicateSpecification,
-    onDragStart,
-    onDragOver,
-    onDragEnd,
-    onDrop,
-    draggedItem
+    onMoveSpecificationUp,
+    onMoveSpecificationDown
 }) {
     const [expanded, setExpanded] = useState(true);
 
     return (
-        <div
-            className={`mos-spec-group-card ${draggedItem?.type === 'group' && draggedItem.groupIndex === groupIndex ? 'dragging' : ''}`}
-            draggable
-            onDragStart={(e) => onDragStart(e, 'group', groupIndex)}
-            onDragOver={(e) => onDragOver(e, 'group', groupIndex)}
-            onDragEnd={onDragEnd}
-            onDrop={(e) => onDrop(e, 'group', groupIndex)}
-        >
+        <div className="mos-spec-group-card">
             <Card
                 title={
                     <div className="mos-spec-group-header">
                         <div className="mos-spec-group-title-row">
-                            <IconSetting className="mos-spec-drag-handle" />
-                            <Input
-                                placeholder={__('Group Title', 'mos-product-specifications-tab')}
-                                value={group.group_title}
-                                onChange={(value) => onUpdate(groupIndex, 'group_title', value)}
-                                className="mos-spec-group-title-input"
-                            />
-                            <TooltipInput
-                                value={group.group_tooltip}
-                                onChange={(value) => onUpdate(groupIndex, 'group_tooltip', value)}
-                                placeholder={__('Group Tooltip', 'mos-product-specifications-tab')}
-                            />
+                            <Space>
+                                <div className="mos-spec-move-buttons">
+                                    <Button
+                                        type="tertiary"
+                                        theme="borderless"
+                                        icon={<IconChevronUp />}
+                                        onClick={() => onMoveUp(groupIndex)}
+                                        disabled={groupIndex === 0}
+                                        className="mos-spec-move-up"
+                                    />
+                                    <Button
+                                        type="tertiary"
+                                        theme="borderless"
+                                        icon={<IconChevronDown />}
+                                        onClick={() => onMoveDown(groupIndex)}
+                                        disabled={groupIndex === totalGroups - 1}
+                                        className="mos-spec-move-down"
+                                    />
+                                </div>
+                                <div className="mos-spec-action-buttons">
+                                    <Button
+                                        type="tertiary"
+                                        theme="borderless"
+                                        icon={<IconCopy />}
+                                        onClick={() => onDuplicate(groupIndex)}
+                                    />
+                                    <Button
+                                        type="tertiary"
+                                        theme="borderless"
+                                        icon={<IconDelete />}
+                                        onClick={() => onRemove(groupIndex)}
+                                    />
+                                    <Button
+                                        type="tertiary"
+                                        theme="borderless"
+                                        icon={expanded ? <IconMinus /> : <IconPlus />}
+                                        onClick={() => setExpanded(!expanded)}
+                                    />
+                                </div>
+                            </Space>
+                            <div className="input-group">
+                                <Input
+                                    placeholder={__('Group Title', 'mos-product-specifications-tab')}
+                                    value={group.group_title}
+                                    onChange={(value) => onUpdate(groupIndex, 'group_title', value)}
+                                    className="mos-spec-group-title-input"
+                                />
+                                <Input
+                                    placeholder={__('Group Tooltip', 'mos-product-specifications-tab')}
+                                    value={group.group_tooltip}
+                                    onChange={(value) => onUpdate(groupIndex, 'group_tooltip', value)}
+                                    className="mos-spec-group-tooltip-input"
+                                />
+                                <TextArea
+                                    placeholder={__('Group Description', 'mos-product-specifications-tab')}
+                                    value={group.group_description}
+                                    onChange={(value) => onUpdate(groupIndex, 'group_description', value)}
+                                    rows={2}
+                                    className="mos-spec-group-description"
+                                />
+
+                            </div>
                         </div>
-                        <Space>
-                            <Button
-                                type="tertiary"
-                                theme="borderless"
-                                icon={<IconCopy />}
-                                onClick={() => onDuplicate(groupIndex)}
-                            />
-                            <Button
-                                type="tertiary"
-                                theme="borderless"
-                                icon={<IconDelete />}
-                                onClick={() => onRemove(groupIndex)}
-                            />
-                            <Button
-                                type="tertiary"
-                                theme="borderless"
-                                icon={expanded ? <IconMinus /> : <IconPlus />}
-                                onClick={() => setExpanded(!expanded)}
-                            />
-                        </Space>
                     </div>
                 }
                 headerExtraContent={<></>}
             >
                 {expanded && (
                     <div className="mos-spec-group-body">
-                        <TextArea
-                            placeholder={__('Group Description', 'mos-product-specifications-tab')}
-                            value={group.group_description}
-                            onChange={(value) => onUpdate(groupIndex, 'group_description', value)}
-                            rows={2}
-                            className="mos-spec-group-description"
-                        />
 
                         <div className="mos-specifications-list">
                             {group.specifications.map((spec, specIndex) => (
@@ -316,14 +319,12 @@ function GroupCard({
                                     spec={spec}
                                     groupIndex={groupIndex}
                                     specIndex={specIndex}
+                                    totalSpecs={group.specifications.length}
                                     onUpdate={onUpdateSpecification}
                                     onRemove={onRemoveSpecification}
                                     onDuplicate={onDuplicateSpecification}
-                                    onDragStart={onDragStart}
-                                    onDragOver={onDragOver}
-                                    onDragEnd={onDragEnd}
-                                    onDrop={onDrop}
-                                    draggedItem={draggedItem}
+                                    onMoveUp={onMoveSpecificationUp}
+                                    onMoveDown={onMoveSpecificationDown}
                                 />
                             ))}
 
@@ -354,66 +355,72 @@ function SpecificationItem({
     spec,
     groupIndex,
     specIndex,
+    totalSpecs,
     onUpdate,
     onRemove,
     onDuplicate,
-    onDragStart,
-    onDragOver,
-    onDragEnd,
-    onDrop,
-    draggedItem
+    onMoveUp,
+    onMoveDown
 }) {
     return (
-        <div
-            className={`mos-spec-item ${draggedItem?.type === 'specification' && draggedItem.groupIndex === groupIndex && draggedItem.specIndex === specIndex ? 'dragging' : ''}`}
-            draggable
-            onDragStart={(e) => onDragStart(e, 'specification', groupIndex, specIndex)}
-            onDragOver={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-            }}
-            onDragEnd={onDragEnd}
-            onDrop={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                onDrop(e, 'specification', groupIndex, specIndex);
-            }}
-        >
+        <div className="mos-spec-item">
             <div className="mos-spec-item-header">
-                <IconSetting className="mos-spec-drag-handle" />
-                <Input
-                    placeholder={__('Specification Title', 'mos-product-specifications-tab')}
-                    value={spec.title}
-                    onChange={(value) => onUpdate(groupIndex, specIndex, 'title', value)}
-                    className="mos-spec-title-input"
-                />
-                <TooltipInput
-                    value={spec.tooltip}
-                    onChange={(value) => onUpdate(groupIndex, specIndex, 'tooltip', value)}
-                    placeholder={__('Tooltip', 'mos-product-specifications-tab')}
-                />
                 <Space>
-                    <Button
-                        type="tertiary"
-                        theme="borderless"
-                        icon={<IconCopy />}
-                        onClick={() => onDuplicate(groupIndex, specIndex)}
-                    />
-                    <Button
-                        type="tertiary"
-                        theme="borderless"
-                        icon={<IconDelete />}
-                        onClick={() => onRemove(groupIndex, specIndex)}
-                    />
+                    <div className="mos-spec-move-buttons">
+                        <Button
+                            type="tertiary"
+                            theme="borderless"
+                            icon={<IconChevronUp />}
+                            onClick={() => onMoveUp(groupIndex, specIndex)}
+                            disabled={specIndex === 0}
+                            className="mos-spec-move-up"
+                        />
+                        <Button
+                            type="tertiary"
+                            theme="borderless"
+                            icon={<IconChevronDown />}
+                            onClick={() => onMoveDown(groupIndex, specIndex)}
+                            disabled={specIndex === totalSpecs - 1}
+                            className="mos-spec-move-down"
+                        />
+                    </div>
+                    <div className="mos-spec-action-buttons">
+                        <Button
+                            type="tertiary"
+                            theme="borderless"
+                            icon={<IconCopy />}
+                            onClick={() => onDuplicate(groupIndex, specIndex)}
+                        />
+                        <Button
+                            type="tertiary"
+                            theme="borderless"
+                            icon={<IconDelete />}
+                            onClick={() => onRemove(groupIndex, specIndex)}
+                        />
+                    </div>
                 </Space>
+                <div className="input-group">
+                    <Input
+                        placeholder={__('Specification Title', 'mos-product-specifications-tab')}
+                        value={spec.title}
+                        onChange={(value) => onUpdate(groupIndex, specIndex, 'title', value)}
+                        className="mos-spec-title-input"
+                    />
+                    <Input
+                        placeholder={__('Specification Tooltip', 'mos-product-specifications-tab')}
+                        value={spec.tooltip}
+                        onChange={(value) => onUpdate(groupIndex, specIndex, 'tooltip', value)}
+                        className="mos-spec-tooltip-input"
+                    />                
+                    <TextArea
+                        placeholder={__('Description', 'mos-product-specifications-tab')}
+                        value={spec.description}
+                        onChange={(value) => onUpdate(groupIndex, specIndex, 'description', value)}
+                        rows={2}
+                        className="mos-spec-description"
+                    />
+                </div>
             </div>
-            <TextArea
-                placeholder={__('Description', 'mos-product-specifications-tab')}
-                value={spec.description}
-                onChange={(value) => onUpdate(groupIndex, specIndex, 'description', value)}
-                rows={2}
-                className="mos-spec-description"
-            />
         </div>
     );
 }
