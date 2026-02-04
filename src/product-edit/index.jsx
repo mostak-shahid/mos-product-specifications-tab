@@ -305,19 +305,34 @@ function GroupCard({
                                     size="small"
                                 />
                             </div>
-                            <div className="mos-spec-inputs-wrapper">
-                                <Input
-                                    placeholder={__('Group Title', 'mos-product-specifications-tab')}
-                                    value={group.group_title}
-                                    onChange={(value) => onUpdate(groupIndex, 'group_title', value)}
-                                    className="mos-spec-group-title-input"
-                                />
-                                <TooltipInput
-                                    value={group.group_tooltip}
-                                    onChange={(value) => onUpdate(groupIndex, 'group_tooltip', value)}
-                                    placeholder={__('Group Tooltip', 'mos-product-specifications-tab')}
-                                />
-                            </div>
+                            {!expanded ? (
+                                <div className="mos-spec-group-heading">
+                                    <h3 className="mos-spec-group-title-heading">
+                                        {group.group_title || __('Untitled Group', 'mos-product-specifications-tab')}
+                                    </h3>
+                                    {group.group_tooltip && (
+                                        <TooltipInput
+                                            value={group.group_tooltip}
+                                            onChange={(value) => onUpdate(groupIndex, 'group_tooltip', value)}
+                                            placeholder={__('Group Tooltip', 'mos-product-specifications-tab')}
+                                        />
+                                    )}
+                                </div>
+                            ) : (
+                                <div className="mos-spec-inputs-wrapper">
+                                    <Input
+                                        placeholder={__('Group Title', 'mos-product-specifications-tab')}
+                                        value={group.group_title}
+                                        onChange={(value) => onUpdate(groupIndex, 'group_title', value)}
+                                        className="mos-spec-group-title-input"
+                                    />
+                                    <TooltipInput
+                                        value={group.group_tooltip}
+                                        onChange={(value) => onUpdate(groupIndex, 'group_tooltip', value)}
+                                        placeholder={__('Group Tooltip', 'mos-product-specifications-tab')}
+                                    />
+                                </div>
+                            )}
                             <Space className="mos-spec-actions">
                                 <Button
                                     type="tertiary"
@@ -452,19 +467,34 @@ function SpecificationItem({
                         className="mos-spec-move-down"
                     />
                 </div>
-                <div className="mos-spec-inputs-wrapper">
-                    <Input
-                        placeholder={__('Specification Title', 'mos-product-specifications-tab')}
-                        value={spec.title}
-                        onChange={(value) => onUpdate(groupIndex, specIndex, 'title', value)}
-                        className="mos-spec-title-input"
-                    />
-                    <TooltipInput
-                        value={spec.tooltip}
-                        onChange={(value) => onUpdate(groupIndex, specIndex, 'tooltip', value)}
-                        placeholder={__('Tooltip', 'mos-product-specifications-tab')}
-                    />
-                </div>
+                {!expanded ? (
+                    <div className="mos-spec-heading">
+                        <h4 className="mos-spec-title-heading">
+                            {spec.title || __('Untitled Specification', 'mos-product-specifications-tab')}
+                        </h4>
+                        {spec.tooltip && (
+                            <TooltipInput
+                                value={spec.tooltip}
+                                onChange={(value) => onUpdate(groupIndex, specIndex, 'tooltip', value)}
+                                placeholder={__('Tooltip', 'mos-product-specifications-tab')}
+                            />
+                        )}
+                    </div>
+                ) : (
+                    <div className="mos-spec-inputs-wrapper">
+                        <Input
+                            placeholder={__('Specification Title', 'mos-product-specifications-tab')}
+                            value={spec.title}
+                            onChange={(value) => onUpdate(groupIndex, specIndex, 'title', value)}
+                            className="mos-spec-title-input"
+                        />
+                        <TooltipInput
+                            value={spec.tooltip}
+                            onChange={(value) => onUpdate(groupIndex, specIndex, 'tooltip', value)}
+                            placeholder={__('Tooltip', 'mos-product-specifications-tab')}
+                        />
+                    </div>
+                )}
                 <Space className="mos-spec-actions">
                     <Button
                         type="tertiary"

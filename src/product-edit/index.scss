@@ -105,9 +105,30 @@
     flex-shrink: 0;
 }
 
-.mos-spec-group-title-input {
-    flex: 1;
-    min-width: 200px;
+.mos-spec-group-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mos-spec-group-title-heading {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.mos-spec-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mos-spec-title-heading {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1f2937;
 }
 
 .mos-spec-group-body {
