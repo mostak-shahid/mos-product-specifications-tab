@@ -149,6 +149,16 @@ class Admin
 				$this->version,
 				true
 			);
+
+			wp_add_inline_script(
+				$this->plugin_name . '-product-edit',
+				sprintf(
+					'window.wpApiSettings = { root: "%s", nonce: "%s" };',
+					esc_url_raw(rest_url()),
+					wp_create_nonce('wp_rest')
+				),
+				'before'
+			);
 		}
 
 		wp_enqueue_script($this->plugin_name . '-admin-ajax', MOS_PRODUCT_SPECIFICATIONS_TAB_URL . 'admin/js/admin-ajax.js', array('jquery'), $this->version, false);

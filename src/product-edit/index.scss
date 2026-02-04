@@ -1,0 +1,199 @@
+.mos-specifications-editor {
+    padding: 16px;
+}
+
+.mos-spec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.mos-spec-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.mos-spec-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.mos-spec-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.mos-spec-group-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    transition: box-shadow 0.2s ease;
+}
+
+.mos-spec-group-card.dragging {
+    opacity: 0.5;
+    border-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.mos-spec-group-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.mos-spec-group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.mos-spec-group-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.mos-spec-drag-handle {
+    cursor: move;
+    color: #9ca3af;
+    flex-shrink: 0;
+}
+
+.mos-spec-drag-handle:hover {
+    color: #3b82f6;
+}
+
+.mos-spec-group-title-input {
+    flex: 1;
+    min-width: 200px;
+}
+
+.mos-spec-group-body {
+    padding: 16px 0;
+}
+
+.mos-spec-group-description {
+    margin-bottom: 16px;
+}
+
+.mos-specifications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.mos-spec-item {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 12px;
+    transition: box-shadow 0.2s ease;
+}
+
+.mos-spec-item.dragging {
+    opacity: 0.5;
+    border-color: #3b82f6;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+}
+
+.mos-spec-item:hover {
+    background: #f3f4f6;
+}
+
+.mos-spec-item-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.mos-spec-title-input {
+    flex: 1;
+    min-width: 150px;
+}
+
+.mos-spec-description {
+    margin-top: 8px;
+}
+
+.mos-spec-tooltip-btn {
+    color: #9ca3af;
+}
+
+.mos-spec-tooltip-btn:hover {
+    color: #3b82f6;
+}
+
+.mos-spec-tooltip-btn.has-value {
+    color: #3b82f6;
+}
+
+.mos-spec-tooltip-btn .tooltip-indicator {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    background: #3b82f6;
+    border-radius: 50%;
+}
+
+.mos-spec-empty {
+    text-align: center;
+    padding: 40px;
+    background: #f9fafb;
+    border: 2px dashed #e5e7eb;
+    border-radius: 8px;
+}
+
+.mos-spec-empty p {
+    color: #6b7280;
+    margin-bottom: 16px;
+}
+
+.mos-spec-empty-list {
+    text-align: center;
+    padding: 20px;
+    background: #f9fafb;
+    border-radius: 6px;
+}
+
+.mos-spec-empty-list p {
+    color: #6b7280;
+    margin: 0;
+}
+
+.mos-spec-add-spec-btn {
+    width: 100%;
+    margin-top: 8px;
+}
+
+.mos-spec-loading {
+    text-align: center;
+    padding: 40px;
+    color: #6b7280;
+}
+
+.mos-specifications-editor .semi-card-header-wrapper {
+    padding: 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.mos-specifications-editor .semi-collapse-header {
+    padding: 12px 16px;
+}
+
+.mos-specifications-editor .semi-input-wrapper {
+    margin: 0;
+}
+
+.mos-specifications-editor .semi-textarea {
+    width: 100%;
+}

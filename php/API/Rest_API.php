@@ -113,9 +113,7 @@ class Rest_API
         // ]);
 
         
-		register_rest_route(
-			self::NAMESPACE,
-			'/options',
+		register_rest_route( self::NAMESPACE, '/options',
 			array(
 				'methods'  => 'GET',
 				'callback' => [$this, 'get_settings'],
@@ -127,9 +125,7 @@ class Rest_API
 		);
 
 		//Add the POST 'mos-product-specifications-tab/v1/options' endpoint to the Rest API
-		register_rest_route(
-			self::NAMESPACE,
-			'/options',
+		register_rest_route( self::NAMESPACE, '/options',
 			array(
 				'methods'             => 'POST',
 				'callback'            => [$this, 'update_settings'],
@@ -140,9 +136,7 @@ class Rest_API
 			)
 		);
 
-		register_rest_route(
-            self::NAMESPACE,
-            '/options/reset-settings',
+		register_rest_route( self::NAMESPACE,'/options/reset-settings',
             array(
                 'methods' => 'POST',
                 'callback' => [$this, 'reset_settings'],
@@ -152,9 +146,7 @@ class Rest_API
             )
         );
 
-		register_rest_route(
-            self::NAMESPACE,
-            '/options/reset-settings-all',
+		register_rest_route( self::NAMESPACE,'/options/reset-settings-all',
             array(
                 'methods' => 'POST',
                 'callback' => [$this, 'reset_settings_all'],
@@ -164,9 +156,7 @@ class Rest_API
             )
         );
         
-		register_rest_route(
-            self::NAMESPACE,
-            '/options/import-settings', [
+		register_rest_route( self::NAMESPACE,'/options/import-settings', [
                 'methods' => 'POST',
                 'callback' => function ($request) {
                     $data = $request->get_json_params();
@@ -180,9 +170,7 @@ class Rest_API
             ]
         );
 
-		register_rest_route(
-            self::NAMESPACE,
-            '/feedback',
+		register_rest_route( self::NAMESPACE, '/feedback',
             array(
                 'methods' => 'POST',
                 'callback' => [$this, 'rest_feedback'],
@@ -193,9 +181,7 @@ class Rest_API
             )
         );
 
-		register_rest_route(
-			self::NAMESPACE,
-			'/set-settings-theme',
+		register_rest_route( self::NAMESPACE, '/set-settings-theme',
 			array(
 				'methods'  => 'GET',
 				'callback' => [$this, 'rest_set_settings_theme'],
@@ -217,9 +203,7 @@ class Rest_API
                 ],
 			)
 		);
-        register_rest_route(
-			self::NAMESPACE,
-			'/get-settings-theme',
+        register_rest_route( self::NAMESPACE, '/get-settings-theme',
 			array(
 				'methods'  => 'GET',
 				'callback' => [$this, 'rest_get_settings_theme'],
@@ -230,9 +214,7 @@ class Rest_API
 			)
 		);
         
-        register_rest_route(
-            self::NAMESPACE,
-            '/deactivation-link',
+        register_rest_route( self::NAMESPACE, '/deactivation-link',
             array(
                 'methods' => 'GET',
                 'callback' => array( $this, 'get_deactivation_link' ),
@@ -245,9 +227,7 @@ class Rest_API
          * Register REST API routes
          */
         // Get logs with filters
-        register_rest_route(
-            self::NAMESPACE,
-            '/logs',
+        register_rest_route( self::NAMESPACE, '/logs',
             array(
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => array( LogsController::class, 'get_logs' ),
@@ -266,9 +246,7 @@ class Rest_API
         );
 
         // Search logs
-        register_rest_route(
-            self::NAMESPACE,
-            '/logs/search',
+        register_rest_route( self::NAMESPACE, '/logs/search',
             array(
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => array( LogsController::class, 'search_logs' ),
@@ -291,9 +269,7 @@ class Rest_API
         );
 
         // Insert new log
-        register_rest_route(
-            self::NAMESPACE,
-            '/logs',
+        register_rest_route( self::NAMESPACE, '/logs',
             array(
                 'methods'             => WP_REST_Server::CREATABLE,
                 'callback'            => array( LogsController::class, 'create_log' ),
@@ -328,9 +304,7 @@ class Rest_API
         );
 
         // Update log by ID
-        register_rest_route(
-            self::NAMESPACE,
-            '/logs/(?P<id>\d+)',
+        register_rest_route( self::NAMESPACE, '/logs/(?P<id>\d+)',
             array(
                 'methods'             => WP_REST_Server::EDITABLE,
                 'callback'            => array( LogsController::class, 'update_log' ),
@@ -363,9 +337,7 @@ class Rest_API
         );
 
         // Delete log by ID
-        register_rest_route(
-            self::NAMESPACE,
-            '/logs/(?P<id>\d+)',
+        register_rest_route( self::NAMESPACE, '/logs/(?P<id>\d+)',
             array(
                 'methods'             => WP_REST_Server::DELETABLE,
                 'callback'            => array( LogsController::class, 'delete_log' ),
@@ -380,9 +352,7 @@ class Rest_API
         );
 
         // Delete all logs
-        register_rest_route(
-            self::NAMESPACE,
-            '/logs/delete-all',
+        register_rest_route( self::NAMESPACE, '/logs/delete-all',
             array(
                 'methods'             => WP_REST_Server::DELETABLE,
                 'callback'            => array( LogsController::class, 'delete_all_logs' ),
@@ -391,9 +361,7 @@ class Rest_API
         );
 
         // Get single log by ID
-        register_rest_route(
-            self::NAMESPACE,
-            '/logs/(?P<id>\d+)',
+        register_rest_route( self::NAMESPACE,'/logs/(?P<id>\d+)',
             array(
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => array( LogsController::class, 'get_log' ),
@@ -408,9 +376,7 @@ class Rest_API
         );
 
         // Logs Over Time Chart
-        register_rest_route(
-            self::NAMESPACE,
-            '/logs/stats/over-time',
+        register_rest_route( self::NAMESPACE,'/logs/stats/over-time',
             array(
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => array( LogsController::class, 'get_logs_over_time' ),
@@ -419,9 +385,7 @@ class Rest_API
         );
 
         // Logs by Category Chart
-        register_rest_route(
-            self::NAMESPACE,
-            '/logs/stats/by-category',
+        register_rest_route( self::NAMESPACE,'/logs/stats/by-category',
             array(
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => array( LogsController::class, 'get_logs_by_category' ),
@@ -430,9 +394,7 @@ class Rest_API
         );
 
         // Logs by User (Top Users) Chart
-        register_rest_route(
-            self::NAMESPACE,
-            '/logs/stats/top-users',
+        register_rest_route( self::NAMESPACE,'/logs/stats/top-users',
             array(
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => array( LogsController::class, 'get_logs_top_users' ),
@@ -441,9 +403,7 @@ class Rest_API
         );
 
         // Logs by IP Address (Top IPs) Chart
-        register_rest_route(
-            self::NAMESPACE,
-            '/logs/stats/top-ips',
+        register_rest_route( self::NAMESPACE,'/logs/stats/top-ips',
             array(
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => array( LogsController::class, 'get_logs_top_ips' ),
@@ -452,9 +412,7 @@ class Rest_API
         );
 
         // Hourly Activity Chart
-        register_rest_route(
-            self::NAMESPACE,
-            '/logs/stats/hourly-activity',
+        register_rest_route( self::NAMESPACE,'/logs/stats/hourly-activity',
             array(
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => array( LogsController::class, 'get_logs_hourly_activity' ),
@@ -463,9 +421,7 @@ class Rest_API
         );
 
         // Bulk Delete Logs
-        register_rest_route(
-            self::NAMESPACE,
-            '/logs/bulk-delete',
+        register_rest_route( self::NAMESPACE,'/logs/bulk-delete',
             array(
                 'methods'             => WP_REST_Server::DELETABLE,
                 'callback'            => array( LogsController::class, 'bulk_delete_logs' ),
@@ -479,6 +435,92 @@ class Rest_API
                 ),
             )
         );
+
+        // Get specifications for a product
+        register_rest_route( self::NAMESPACE,'/product/(?P<product_id>\d+)/specifications',
+            array(
+                'methods'             => WP_REST_Server::READABLE,
+                'callback'            => array( $this, 'get_product_specifications' ),
+                'permission_callback' => function () {
+                    return current_user_can( 'edit_posts' );
+                },
+                'args'                => array(
+                    'product_id' => array(
+                        'required'          => true,
+                        'sanitize_callback' => 'absint',
+                    ),
+                ),
+            )
+        );
+
+        // Save specifications for a product
+        register_rest_route( self::NAMESPACE,'/product/(?P<product_id>\d+)/specifications',
+            array(
+                'methods'             => WP_REST_Server::CREATABLE,
+                'callback'            => array( $this, 'save_product_specifications' ),
+                'permission_callback' => function () {
+                    return current_user_can( 'edit_posts' );
+                },
+                'args'                => array(
+                    'product_id' => array(
+                        'required'          => true,
+                        'sanitize_callback' => 'absint',
+                    ),
+                ),
+            )
+        );
+    }
+
+    public function get_product_specifications( WP_REST_Request $request ) {
+        $product_id = intval( $request->get_param( 'product_id' ) );
+
+        if ( ! $product_id ) {
+            return new WP_Error(
+                'invalid_product_id',
+                __( 'Invalid product ID', 'mos-product-specifications-tab' ),
+                array( 'status' => 400 )
+            );
+        }
+
+        $specifications_data = get_post_meta( $product_id, '_mos_specifications_data', true );
+
+        if ( empty( $specifications_data ) ) {
+            $specifications_data = array();
+        }
+
+        return rest_ensure_response( array(
+            'success' => true,
+            'data'    => $specifications_data,
+        ) );
+    }
+
+    public function save_product_specifications( WP_REST_Request $request ) {
+        $product_id = intval( $request->get_param( 'product_id' ) );
+
+        if ( ! $product_id ) {
+            return new WP_Error(
+                'invalid_product_id',
+                __( 'Invalid product ID', 'mos-product-specifications-tab' ),
+                array( 'status' => 400 )
+            );
+        }
+
+        $data = $request->get_json_params();
+
+        if ( ! isset( $data['specifications'] ) ) {
+            return new WP_Error(
+                'missing_data',
+                __( 'Missing specifications data', 'mos-product-specifications-tab' ),
+                array( 'status' => 400 )
+            );
+        }
+
+        $updated = update_post_meta( $product_id, '_mos_specifications_data', $data['specifications'] );
+
+        return rest_ensure_response( array(
+            'success' => true,
+            'message' => __( 'Specifications saved successfully', 'mos-product-specifications-tab' ),
+        ) );
     }
     /**
      * Check permission for API access
