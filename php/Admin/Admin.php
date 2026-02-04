@@ -235,8 +235,19 @@ class Admin
 	public function mpst_save_product_tab_data( $post_id, $post, $update ) {
 		global $post;
 		if (isset($_POST['mos_specifications_tab_field']) && wp_verify_nonce($_POST['mos_specifications_tab_field'], 'mos_specifications_tab_action')) {
-			if(isset($_POST['_mos_specifications_data'])) update_post_meta( $post->ID, '_mos_specifications_data', $_POST['_mos_specifications_data'] );
-			else update_post_meta( $post->ID, '_mos_specifications_data', '' );
+			if(isset($_POST['_mos_specifications_data'])) {
+				$data = $_POST['_mos_specifications_data'];
+				if (is_array($data)) {
+					update_post_meta( $post->ID, '_mos_specifications_data', $data );
+				} else if (!empty($data)) {
+					$decoded = json_decode(stripslashes($data), true);
+					if (is_array($decoded)) {
+						update_post_meta( $post->ID, '_mos_specifications_data', $decoded );
+					}
+				}
+			} else {
+				update_post_meta( $post->ID, '_mos_specifications_data', array() );
+			}
 		}
 	}
 }

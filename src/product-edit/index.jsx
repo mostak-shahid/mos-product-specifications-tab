@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import { Card, Button, Input, TextArea, Collapse, Toast, Popover, Space, Typography, Icon } from '@douyinfe/semi-ui';
+import { Card, Button, Input, TextArea, Toast, Popover, Space, Typography, Icon } from '@douyinfe/semi-ui';
 import { IconPlus, IconMinus, IconSetting, IconHelpCircle, IconCopy, IconDelete } from '@douyinfe/semi-icons';
 import './index.scss';
 // Configure apiFetch with REST API settings
@@ -23,11 +23,9 @@ const { Text } = Typography;
 
 export default function ProductSpecificationsEdit() {
     const [loading, setLoading] = useState(true);
-    const [saving, setSaving] = useState(false);
     const [groups, setGroups] = useState([]);
     const [productId, setProductId] = useState(null);
     const [draggedItem, setDraggedItem] = useState(null);
-    const [dragSource, setDragSource] = useState(null);
 
     useEffect(() => {
         const productIdElement = document.querySelector('#post_ID');
@@ -38,36 +36,28 @@ export default function ProductSpecificationsEdit() {
         }
     }, []);
 
+    useEffect(() => {
+        if (groups.length >= 0 || loading === false) {
+            const hiddenInput = document.getElementById('_mos_specifications_data');
+            if (hiddenInput) {
+                hiddenInput.value = JSON.stringify(groups);
+            }
+        }
+    }, [groups, loading]);
+
     const loadSpecifications = async (id) => {
         try {
             const response = await apiFetch({
                 path: `/mos-product-specifications-tab/v1/product/${id}/specifications`,
                 method: 'GET',
             });
-            setGroups(response.data || []);
+            const data = response.data || [];
+            setGroups(Array.isArray(data) ? data : []);
         } catch (error) {
             console.error('Error loading specifications:', error);
             Toast.error({ content: __('Failed to load specifications', 'mos-product-specifications-tab') });
         } finally {
             setLoading(false);
-        }
-    };
-
-    const saveSpecifications = async () => {
-        if (!productId) return;
-        setSaving(true);
-        try {
-            await apiFetch({
-                path: `/mos-product-specifications-tab/v1/product/${productId}/specifications`,
-                method: 'POST',
-                data: { specifications: groups },
-            });
-            Toast.success({ content: __('Specifications saved successfully', 'mos-product-specifications-tab') });
-        } catch (error) {
-            console.error('Error saving specifications:', error);
-            Toast.error({ content: __('Failed to save specifications', 'mos-product-specifications-tab') });
-        } finally {
-            setSaving(false);
         }
     };
 
@@ -134,7 +124,6 @@ export default function ProductSpecificationsEdit() {
 
     const handleDragStart = (e, type, groupIndex, specIndex = null) => {
         setDraggedItem({ type, groupIndex, specIndex });
-        setDragSource({ type, groupIndex, specIndex });
         e.dataTransfer.effectAllowed = 'move';
         e.target.style.opacity = '0.5';
     };
@@ -147,11 +136,12 @@ export default function ProductSpecificationsEdit() {
     const handleDragEnd = (e) => {
         e.target.style.opacity = '1';
         setDraggedItem(null);
-        setDragSource(null);
     };
 
     const handleDrop = (e, targetType, targetGroupIndex, targetSpecIndex = null) => {
         e.preventDefault();
+        e.stopPropagation();
+
         if (!draggedItem) return;
 
         const { type: sourceType, groupIndex: sourceGroupIndex, specIndex: sourceSpecIndex } = draggedItem;
@@ -167,10 +157,13 @@ export default function ProductSpecificationsEdit() {
             if (sourceSpecIndex === targetSpecIndex) return;
 
             const updatedGroups = [...groups];
-            const [movedSpec] = updatedGroups[targetGroupIndex].specifications.splice(sourceSpecIndex, 1);
-            updatedGroups[targetGroupIndex].specifications.splice(targetSpecIndex, 0, movedSpec);
+            const specs = updatedGroups[targetGroupIndex].specifications;
+            const [movedSpec] = specs.splice(sourceSpecIndex, 1);
+            specs.splice(targetSpecIndex, 0, movedSpec);
             setGroups(updatedGroups);
         }
+
+        setDraggedItem(null);
     };
 
     if (loading) {
@@ -181,26 +174,23 @@ export default function ProductSpecificationsEdit() {
         <div className="mos-specifications-editor">
             <div className="mos-spec-header">
                 <h3>{__('Product Specifications', 'mos-product-specifications-tab')}</h3>
-                <div className="mos-spec-actions">
-                    <Button
-                        theme="solid"
-                        type="primary"
-                        onClick={addGroup}
-                        icon={<IconPlus />}
-                    >
-                        {__('Add Group', 'mos-product-specifications-tab')}
-                    </Button>
-                    <Button
-                        theme="solid"
-                        type="primary"
-                        onClick={saveSpecifications}
-                        loading={saving}
-                        disabled={saving}
-                    >
-                        {__('Save', 'mos-product-specifications-tab')}
-                    </Button>
-                </div>
+                <Button
+                    theme="solid"
+                    type="primary"
+                    onClick={addGroup}
+                    icon={<IconPlus />}
+                >
+                    {__('Add Group', 'mos-product-specifications-tab')}
+                </Button>
             </div>
+
+            <input
+                type="hidden"
+                id="_mos_specifications_data"
+                name="_mos_specifications_data"
+                value={JSON.stringify(groups)}
+                readOnly
+            />
 
             <div className="mos-spec-groups">
                 {groups.map((group, groupIndex) => (
@@ -378,9 +368,16 @@ function SpecificationItem({
             className={`mos-spec-item ${draggedItem?.type === 'specification' && draggedItem.groupIndex === groupIndex && draggedItem.specIndex === specIndex ? 'dragging' : ''}`}
             draggable
             onDragStart={(e) => onDragStart(e, 'specification', groupIndex, specIndex)}
-            onDragOver={(e) => onDragOver(e, 'specification', groupIndex, specIndex)}
+            onDragOver={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            }}
             onDragEnd={onDragEnd}
-            onDrop={(e) => onDrop(e, 'specification', groupIndex, specIndex)}
+            onDrop={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onDrop(e, 'specification', groupIndex, specIndex);
+            }}
         >
             <div className="mos-spec-item-header">
                 <IconSetting className="mos-spec-drag-handle" />
