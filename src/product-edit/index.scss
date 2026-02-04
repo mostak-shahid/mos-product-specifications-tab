@@ -17,11 +17,6 @@
     font-weight: 600;
 }
 
-.mos-spec-actions {
-    display: flex;
-    gap: 8px;
-}
-
 .mos-spec-groups {
     display: flex;
     flex-direction: column;
@@ -51,31 +46,63 @@
     align-items: center;
     gap: 12px;
     flex: 1;
+    width: 100%;
 }
 
-.mos-spec-move-buttons {
+.mos-spec-group-icon {
     display: flex;
-    gap: 2px;
     align-items: center;
+    gap: 4px;
     flex-shrink: 0;
 }
 
-.mos-spec-move-up,
-.mos-spec-move-down {
-    padding: 4px 8px;
+.mos-spec-icon-preview {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #e5e7eb;
+}
+
+.mos-spec-icon-placeholder {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9fafb;
+    border: 1px dashed #d1d5db;
+    border-radius: 4px;
+    color: #9ca3af;
+}
+
+.mos-spec-icon-upload-btn {
+    padding: 4px 6px;
+    min-width: 28px;
+    height: 28px;
+}
+
+.mos-spec-inputs-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.mos-spec-actions {
+    flex-shrink: 0;
+}
+
+.mos-spec-toggle-btn {
     min-width: 32px;
     height: 32px;
 }
 
-.mos-spec-move-up:disabled,
-.mos-spec-move-down:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
-
-.mos-spec-move-up:hover:not(:disabled),
-.mos-spec-move-down:hover:not(:disabled) {
-    background-color: #f3f4f6;
+.mos-spec-move-buttons-header {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    flex-shrink: 0;
 }
 
 .mos-spec-group-title-input {
@@ -112,9 +139,41 @@
 
 .mos-spec-item-header {
     display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+}
+
+.mos-spec-spec-inputs-wrapper {
+    display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 8px;
+    flex: 1;
+}
+
+.mos-spec-move-buttons {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.mos-spec-move-up,
+.mos-spec-move-down {
+    padding: 4px 8px;
+    min-width: 32px;
+    height: 32px;
+}
+
+.mos-spec-move-up:disabled,
+.mos-spec-move-down:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.mos-spec-move-up:hover:not(:disabled),
+.mos-spec-move-down:hover:not(:disabled) {
+    background-color: #f3f4f6;
 }
 
 .mos-spec-title-input {
@@ -184,6 +243,19 @@
     color: #6b7280;
 }
 
+.mos-spec-media-uploader {
+    .mos-spec-media-uploader-content {
+        text-align: center;
+        padding: 32px;
+
+        p {
+            color: #6b7280;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+    }
+}
+
 .mos-specifications-editor .semi-card-header-wrapper {
     padding: 16px;
     border-bottom: 1px solid #e5e7eb;
@@ -196,4 +268,3 @@
 .mos-specifications-editor .semi-textarea {
     width: 100%;
 }
-

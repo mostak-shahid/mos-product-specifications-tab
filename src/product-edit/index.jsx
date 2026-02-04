@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import { Card, Button, Input, TextArea, Toast, Popover, Space, Typography, Icon } from '@douyinfe/semi-ui';
-import { IconPlus, IconMinus, IconChevronUp, IconChevronDown, IconHelpCircle, IconCopy, IconDelete } from '@douyinfe/semi-icons';
+import { Card, Button, Input, TextArea, Toast, Popover, Space, Typography, Icon, Popconfirm, Modal, Image } from '@douyinfe/semi-ui';
+import { IconPlus, IconMinus, IconChevronUp, IconChevronDown, IconHelpCircle, IconCopy, IconDelete, IconUpload, IconDeleteStroked } from '@douyinfe/semi-icons';
 import './index.scss';
 
 const { Text } = Typography;
@@ -25,6 +25,8 @@ export default function ProductSpecificationsEdit() {
     const [loading, setLoading] = useState(true);
     const [groups, setGroups] = useState([]);
     const [productId, setProductId] = useState(null);
+    const [imageUploadModal, setImageUploadModal] = useState({ visible: false, groupIndex: null });
+    const [mediaUploaderOpen, setMediaUploaderOpen] = useState(false);
 
     useEffect(() => {
         const productIdElement = document.querySelector('#post_ID');
@@ -77,9 +79,32 @@ export default function ProductSpecificationsEdit() {
         setGroups(updatedGroups);
     };
 
+    const openImageUpload = (groupIndex) => {
+        setImageUploadModal({ visible: true, groupIndex });
+        setMediaUploaderOpen(true);
+    };
+
+    const closeImageUpload = () => {
+        setImageUploadModal({ visible: false, groupIndex: null });
+        setMediaUploaderOpen(false);
+    };
+
+    const handleImageSelect = (attachment) => {
+        const { groupIndex } = imageUploadModal;
+        if (groupIndex !== null) {
+            const imageUrl = attachment.url || attachment.sizes?.full?.url || attachment.sizes?.thumbnail?.url;
+            updateGroup(groupIndex, 'group_icon', {
+                id: attachment.id,
+                url: imageUrl,
+            });
+        }
+        closeImageUpload();
+    };
+
     const removeGroup = (groupIndex) => {
         const updatedGroups = groups.filter((_, index) => index !== groupIndex);
         setGroups(updatedGroups);
+        Toast.success({ content: __('Group deleted', 'mos-product-specifications-tab') });
     };
 
     const duplicateGroup = (groupIndex) => {
@@ -126,6 +151,7 @@ export default function ProductSpecificationsEdit() {
             (_, index) => index !== specIndex
         );
         setGroups(updatedGroups);
+        Toast.success({ content: __('Specification deleted', 'mos-product-specifications-tab') });
     };
 
     const duplicateSpecification = (groupIndex, specIndex) => {
@@ -159,6 +185,14 @@ export default function ProductSpecificationsEdit() {
         <div className="mos-specifications-editor">
             <div className="mos-spec-header">
                 <h3>{__('Product Specifications', 'mos-product-specifications-tab')}</h3>
+                <Button
+                    theme="solid"
+                    type="primary"
+                    onClick={addGroup}
+                    icon={<IconPlus />}
+                >
+                    {__('Add Group', 'mos-product-specifications-tab')}
+                </Button>
             </div>
 
             <input
@@ -187,6 +221,7 @@ export default function ProductSpecificationsEdit() {
                         onDuplicateSpecification={duplicateSpecification}
                         onMoveSpecificationUp={moveSpecificationUp}
                         onMoveSpecificationDown={moveSpecificationDown}
+                        onOpenImageUpload={openImageUpload}
                     />
                 ))}
 
@@ -214,6 +249,12 @@ export default function ProductSpecificationsEdit() {
                     {__('Add Group', 'mos-product-specifications-tab')}
                 </Button>
             </div>
+
+            <MediaUploaderModal
+                visible={imageUploadModal.visible}
+                onClose={closeImageUpload}
+                onMediaSelect={handleImageSelect}
+            />
         </div>
     );
 }
@@ -232,7 +273,8 @@ function GroupCard({
     onRemoveSpecification,
     onDuplicateSpecification,
     onMoveSpecificationUp,
-    onMoveSpecificationDown
+    onMoveSpecificationDown,
+    onOpenImageUpload
 }) {
     const [expanded, setExpanded] = useState(true);
 
@@ -242,75 +284,100 @@ function GroupCard({
                 title={
                     <div className="mos-spec-group-header">
                         <div className="mos-spec-group-title-row">
-                            <Space>
-                                <div className="mos-spec-move-buttons">
-                                    <Button
-                                        type="tertiary"
-                                        theme="borderless"
-                                        icon={<IconChevronUp />}
-                                        onClick={() => onMoveUp(groupIndex)}
-                                        disabled={groupIndex === 0}
-                                        className="mos-spec-move-up"
+                            <div className="mos-spec-group-icon">
+                                {group.group_icon?.url ? (
+                                    <img
+                                        src={group.group_icon.url}
+                                        alt={__('Group Icon', 'mos-product-specifications-tab')}
+                                        className="mos-spec-icon-preview"
                                     />
-                                    <Button
-                                        type="tertiary"
-                                        theme="borderless"
-                                        icon={<IconChevronDown />}
-                                        onClick={() => onMoveDown(groupIndex)}
-                                        disabled={groupIndex === totalGroups - 1}
-                                        className="mos-spec-move-down"
-                                    />
-                                </div>
-                                <div className="mos-spec-action-buttons">
-                                    <Button
-                                        type="tertiary"
-                                        theme="borderless"
-                                        icon={<IconCopy />}
-                                        onClick={() => onDuplicate(groupIndex)}
-                                    />
-                                    <Button
-                                        type="tertiary"
-                                        theme="borderless"
-                                        icon={<IconDelete />}
-                                        onClick={() => onRemove(groupIndex)}
-                                    />
-                                    <Button
-                                        type="tertiary"
-                                        theme="borderless"
-                                        icon={expanded ? <IconMinus /> : <IconPlus />}
-                                        onClick={() => setExpanded(!expanded)}
-                                    />
-                                </div>
-                            </Space>
-                            <div className="input-group">
+                                ) : (
+                                    <div className="mos-spec-icon-placeholder">
+                                        <IconUpload />
+                                    </div>
+                                )}
+                                <Button
+                                    type="tertiary"
+                                    theme="borderless"
+                                    icon={<IconUpload />}
+                                    onClick={() => onOpenImageUpload(groupIndex)}
+                                    className="mos-spec-icon-upload-btn"
+                                    size="small"
+                                />
+                            </div>
+                            <div className="mos-spec-inputs-wrapper">
                                 <Input
                                     placeholder={__('Group Title', 'mos-product-specifications-tab')}
                                     value={group.group_title}
                                     onChange={(value) => onUpdate(groupIndex, 'group_title', value)}
                                     className="mos-spec-group-title-input"
                                 />
-                                <Input
-                                    placeholder={__('Group Tooltip', 'mos-product-specifications-tab')}
+                                <TooltipInput
                                     value={group.group_tooltip}
                                     onChange={(value) => onUpdate(groupIndex, 'group_tooltip', value)}
-                                    className="mos-spec-group-tooltip-input"
+                                    placeholder={__('Group Tooltip', 'mos-product-specifications-tab')}
                                 />
-                                <TextArea
-                                    placeholder={__('Group Description', 'mos-product-specifications-tab')}
-                                    value={group.group_description}
-                                    onChange={(value) => onUpdate(groupIndex, 'group_description', value)}
-                                    rows={2}
-                                    className="mos-spec-group-description"
-                                />
-
                             </div>
+                            <Space className="mos-spec-actions">
+                                <Button
+                                    type="tertiary"
+                                    theme="borderless"
+                                    icon={<IconCopy />}
+                                    onClick={() => onDuplicate(groupIndex)}
+                                />
+                                <Popconfirm
+                                    title={__('Delete Group', 'mos-product-specifications-tab')}
+                                    content={__('Are you sure you want to delete this group?', 'mos-product-specifications-tab')}
+                                    onConfirm={() => onRemove(groupIndex)}
+                                    okText={__('Delete', 'mos-product-specifications-tab')}
+                                    cancelText={__('Cancel', 'mos-product-specifications-tab')}
+                                >
+                                    <Button
+                                        type="tertiary"
+                                        theme="borderless"
+                                        icon={<IconDelete />}
+                                    />
+                                </Popconfirm>
+                                <Button
+                                    type="tertiary"
+                                    theme="borderless"
+                                    icon={expanded ? <IconMinus /> : <IconPlus />}
+                                    onClick={() => setExpanded(!expanded)}
+                                />
+                            </Space>
                         </div>
                     </div>
                 }
-                headerExtraContent={<></>}
+                headerExtraContent={
+                    <div className="mos-spec-move-buttons-header">
+                        <Button
+                            type="tertiary"
+                            theme="borderless"
+                            icon={<IconChevronUp />}
+                            onClick={() => onMoveUp(groupIndex)}
+                            disabled={groupIndex === 0}
+                            className="mos-spec-move-up"
+                        />
+                        <Button
+                            type="tertiary"
+                            theme="borderless"
+                            icon={<IconChevronDown />}
+                            onClick={() => onMoveDown(groupIndex)}
+                            disabled={groupIndex === totalGroups - 1}
+                            className="mos-spec-move-down"
+                        />
+                    </div>
+                }
             >
                 {expanded && (
                     <div className="mos-spec-group-body">
+                        <TextArea
+                            placeholder={__('Group Description', 'mos-product-specifications-tab')}
+                            value={group.group_description}
+                            onChange={(value) => onUpdate(groupIndex, 'group_description', value)}
+                            rows={2}
+                            className="mos-spec-group-description"
+                        />
 
                         <div className="mos-specifications-list">
                             {group.specifications.map((spec, specIndex) => (
@@ -362,65 +429,80 @@ function SpecificationItem({
     onMoveUp,
     onMoveDown
 }) {
+    const [expanded, setExpanded] = useState(true);
+
     return (
         <div className="mos-spec-item">
             <div className="mos-spec-item-header">
-                <Space>
-                    <div className="mos-spec-move-buttons">
-                        <Button
-                            type="tertiary"
-                            theme="borderless"
-                            icon={<IconChevronUp />}
-                            onClick={() => onMoveUp(groupIndex, specIndex)}
-                            disabled={specIndex === 0}
-                            className="mos-spec-move-up"
-                        />
-                        <Button
-                            type="tertiary"
-                            theme="borderless"
-                            icon={<IconChevronDown />}
-                            onClick={() => onMoveDown(groupIndex, specIndex)}
-                            disabled={specIndex === totalSpecs - 1}
-                            className="mos-spec-move-down"
-                        />
-                    </div>
-                    <div className="mos-spec-action-buttons">
-                        <Button
-                            type="tertiary"
-                            theme="borderless"
-                            icon={<IconCopy />}
-                            onClick={() => onDuplicate(groupIndex, specIndex)}
-                        />
-                        <Button
-                            type="tertiary"
-                            theme="borderless"
-                            icon={<IconDelete />}
-                            onClick={() => onRemove(groupIndex, specIndex)}
-                        />
-                    </div>
-                </Space>
-                <div className="input-group">
+                <div className="mos-spec-move-buttons">
+                    <Button
+                        type="tertiary"
+                        theme="borderless"
+                        icon={<IconChevronUp />}
+                        onClick={() => onMoveUp(groupIndex, specIndex)}
+                        disabled={specIndex === 0}
+                        className="mos-spec-move-up"
+                    />
+                    <Button
+                        type="tertiary"
+                        theme="borderless"
+                        icon={<IconChevronDown />}
+                        onClick={() => onMoveDown(groupIndex, specIndex)}
+                        disabled={specIndex === totalSpecs - 1}
+                        className="mos-spec-move-down"
+                    />
+                </div>
+                <div className="mos-spec-inputs-wrapper">
                     <Input
                         placeholder={__('Specification Title', 'mos-product-specifications-tab')}
                         value={spec.title}
                         onChange={(value) => onUpdate(groupIndex, specIndex, 'title', value)}
                         className="mos-spec-title-input"
                     />
-                    <Input
-                        placeholder={__('Specification Tooltip', 'mos-product-specifications-tab')}
+                    <TooltipInput
                         value={spec.tooltip}
                         onChange={(value) => onUpdate(groupIndex, specIndex, 'tooltip', value)}
-                        className="mos-spec-tooltip-input"
-                    />                
-                    <TextArea
-                        placeholder={__('Description', 'mos-product-specifications-tab')}
-                        value={spec.description}
-                        onChange={(value) => onUpdate(groupIndex, specIndex, 'description', value)}
-                        rows={2}
-                        className="mos-spec-description"
+                        placeholder={__('Tooltip', 'mos-product-specifications-tab')}
                     />
                 </div>
+                <Space className="mos-spec-actions">
+                    <Button
+                        type="tertiary"
+                        theme="borderless"
+                        icon={<IconCopy />}
+                        onClick={() => onDuplicate(groupIndex, specIndex)}
+                    />
+                    <Popconfirm
+                        title={__('Delete Specification', 'mos-product-specifications-tab')}
+                        content={__('Are you sure you want to delete this specification?', 'mos-product-specifications-tab')}
+                        onConfirm={() => onRemove(groupIndex, specIndex)}
+                        okText={__('Delete', 'mos-product-specifications-tab')}
+                        cancelText={__('Cancel', 'mos-product-specifications-tab')}
+                    >
+                        <Button
+                            type="tertiary"
+                            theme="borderless"
+                            icon={<IconDelete />}
+                        />
+                    </Popconfirm>
+                    <Button
+                        type="tertiary"
+                        theme="borderless"
+                        icon={expanded ? <IconMinus /> : <IconPlus />}
+                        onClick={() => setExpanded(!expanded)}
+                        className="mos-spec-toggle-btn"
+                    />
+                </Space>
             </div>
+            {expanded && (
+                <TextArea
+                    placeholder={__('Description', 'mos-product-specifications-tab')}
+                    value={spec.description}
+                    onChange={(value) => onUpdate(groupIndex, specIndex, 'description', value)}
+                    rows={2}
+                    className="mos-spec-description"
+                />
+            )}
         </div>
     );
 }
@@ -456,6 +538,89 @@ function TooltipInput({ value, onChange, placeholder }) {
                 {value && <span className="tooltip-indicator">•</span>}
             </Button>
         </Popover>
+    );
+}
+
+function MediaUploaderModal({ visible, onClose, onMediaSelect }) {
+    useEffect(() => {
+        if (visible && typeof wp !== 'undefined' && wp.media) {
+            let frame;
+            const openMediaUploader = () => {
+                if (frame) {
+                    frame.open();
+                    return;
+                }
+
+                frame = wp.media({
+                    title: __('Select or Upload Image', 'mos-product-specifications-tab'),
+                    button: {
+                        text: __('Use This Image', 'mos-product-specifications-tab'),
+                    },
+                    multiple: false,
+                    library: { type: 'image' },
+                });
+
+                frame.on('select', function() {
+                    const attachment = frame.state().get('selection').first().toJSON();
+                    onMediaSelect(attachment);
+                    frame.close();
+                });
+
+                frame.open();
+            };
+
+            openMediaUploader();
+        }
+    }, [visible]);
+
+    return (
+        <Modal
+            title={__('Upload Group Icon', 'mos-product-specifications-tab')}
+            visible={visible}
+            onCancel={onClose}
+            footer={
+                <Button onClick={onClose}>
+                    {__('Close', 'mos-product-specifications-tab')}
+                </Button>
+            }
+            width={600}
+        >
+            <div className="mos-spec-media-uploader">
+                <div className="mos-spec-media-uploader-content">
+                    <p>{__('WordPress Media Library will open when you click "Close" button again, or you can close this modal and click the upload icon in the group.', 'mos-product-specifications-tab')}</p>
+                    <Button
+                        theme="solid"
+                        type="primary"
+                        icon={<IconUpload />}
+                        onClick={() => {
+                            onClose();
+                            setTimeout(() => {
+                                if (typeof wp !== 'undefined' && wp.media) {
+                                    const frame = wp.media({
+                                        title: __('Select or Upload Image', 'mos-product-specifications-tab'),
+                                        button: {
+                                            text: __('Use This Image', 'mos-product-specifications-tab'),
+                                        },
+                                        multiple: false,
+                                        library: { type: 'image' },
+                                    });
+
+                                    frame.on('select', function() {
+                                        const attachment = frame.state().get('selection').first().toJSON();
+                                        onMediaSelect(attachment);
+                                        frame.close();
+                                    });
+
+                                    frame.open();
+                                }
+                            }, 100);
+                        }}
+                    >
+                        {__('Open Media Library', 'mos-product-specifications-tab')}
+                    </Button>
+                </div>
+            </div>
+        </Modal>
     );
 }
 
