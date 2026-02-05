@@ -69,10 +69,16 @@ class LogsController
 		if (empty($changes)) {
 			return;
 		}
+        // error_log(print_r($old_data, true));
+        // error_log(print_r($new_data, true));
 
 		$user_id = get_current_user_id();
 		$ip = Utils::get_client_ip();
 		$user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? sanitize_text_field( wp_unslash($_SERVER['HTTP_USER_AGENT']) ) : '';
+        $description = sprintf(esc_html__('%d setting(s) changed.', 'mos-product-specifications-tab'), esc_html(count($changes)));
+        foreach($changes as $change) {
+            
+        }
 
 		$wpdb->insert(
 			$logs_table_name,
@@ -82,7 +88,7 @@ class LogsController
 				'user_agent' => $user_agent,
 				'title' => 'Settings Updated',
                 'category' => __('Settings Change', 'mos-product-specifications-tab'),
-				'description' => count($changes) . ' setting(s) changed',
+				'description' => $description,
 				// 'data' => json_encode($changes),
 				'created_at' => current_time('mysql'),
 				'updated_at' => current_time('mysql')

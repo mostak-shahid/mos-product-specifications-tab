@@ -182,19 +182,7 @@ export default function ProductSpecificationsEdit() {
     }
 
     return (
-        <div className="mos-specifications-editor">
-            <div className="mos-spec-header">
-                <h3>{__('Product Specifications', 'mos-product-specifications-tab')}</h3>
-                <Button
-                    theme="solid"
-                    type="primary"
-                    onClick={addGroup}
-                    icon={<IconPlus />}
-                >
-                    {__('Add Group', 'mos-product-specifications-tab')}
-                </Button>
-            </div>
-
+        <div className="mos-specifications-editor p-4">
             <input
                 type="hidden"
                 id="_mos_specifications_data"
@@ -326,40 +314,21 @@ function GroupCard({
                                         onChange={(value) => onUpdate(groupIndex, 'group_title', value)}
                                         className="mos-spec-group-title-input"
                                     />
-                                    <TooltipInput
+                                    <Input
+                                        placeholder={__('Group Tooltip', 'mos-product-specifications-tab')}
                                         value={group.group_tooltip}
                                         onChange={(value) => onUpdate(groupIndex, 'group_tooltip', value)}
-                                        placeholder={__('Group Tooltip', 'mos-product-specifications-tab')}
+                                        className="mos-spec-group-title-input"
+                                    />
+                                    <TextArea
+                                        placeholder={__('Group Description', 'mos-product-specifications-tab')}
+                                        value={group.group_description}
+                                        onChange={(value) => onUpdate(groupIndex, 'group_description', value)}
+                                        rows={2}
+                                        className="mos-spec-group-description"
                                     />
                                 </div>
                             )}
-                            <Space className="mos-spec-actions">
-                                <Button
-                                    type="tertiary"
-                                    theme="borderless"
-                                    icon={<IconCopy />}
-                                    onClick={() => onDuplicate(groupIndex)}
-                                />
-                                <Popconfirm
-                                    title={__('Delete Group', 'mos-product-specifications-tab')}
-                                    content={__('Are you sure you want to delete this group?', 'mos-product-specifications-tab')}
-                                    onConfirm={() => onRemove(groupIndex)}
-                                    okText={__('Delete', 'mos-product-specifications-tab')}
-                                    cancelText={__('Cancel', 'mos-product-specifications-tab')}
-                                >
-                                    <Button
-                                        type="tertiary"
-                                        theme="borderless"
-                                        icon={<IconDelete />}
-                                    />
-                                </Popconfirm>
-                                <Button
-                                    type="tertiary"
-                                    theme="borderless"
-                                    icon={expanded ? <IconMinus /> : <IconPlus />}
-                                    onClick={() => setExpanded(!expanded)}
-                                />
-                            </Space>
                         </div>
                     </div>
                 }
@@ -381,18 +350,36 @@ function GroupCard({
                             disabled={groupIndex === totalGroups - 1}
                             className="mos-spec-move-down"
                         />
+                        <Button
+                            type="tertiary"
+                            theme="borderless"
+                            icon={<IconCopy />}
+                            onClick={() => onDuplicate(groupIndex)}
+                        />
+                        <Popconfirm
+                            title={__('Delete Group', 'mos-product-specifications-tab')}
+                            content={__('Are you sure you want to delete this group?', 'mos-product-specifications-tab')}
+                            onConfirm={() => onRemove(groupIndex)}
+                            okText={__('Delete', 'mos-product-specifications-tab')}
+                            cancelText={__('Cancel', 'mos-product-specifications-tab')}
+                        >
+                            <Button
+                                type="tertiary"
+                                theme="borderless"
+                                icon={<IconDelete />}
+                            />
+                        </Popconfirm>
+                        <Button
+                            type="tertiary"
+                            theme="borderless"
+                            icon={expanded ? <IconMinus /> : <IconPlus />}
+                            onClick={() => setExpanded(!expanded)}
+                        />
                     </div>
                 }
             >
                 {expanded && (
                     <div className="mos-spec-group-body">
-                        <TextArea
-                            placeholder={__('Group Description', 'mos-product-specifications-tab')}
-                            value={group.group_description}
-                            onChange={(value) => onUpdate(groupIndex, 'group_description', value)}
-                            rows={2}
-                            className="mos-spec-group-description"
-                        />
 
                         <div className="mos-specifications-list">
                             {group.specifications.map((spec, specIndex) => (

@@ -83,7 +83,15 @@ class Admin
 		// 	wp_enqueue_style($this->plugin_name . '-react', MOS_PRODUCT_SPECIFICATIONS_TAB_URL . 'build/index.css');
 		// }
 
-		if ($hook == 'toplevel_page_mos-product-specifications-tab') {
+		// Get current admin screen
+		$screen = get_current_screen();
+		if (
+			$hook == 'toplevel_page_mos-product-specifications-tab' || 
+			(
+				$screen->post_type === 'product' &&
+				in_array($screen->base, ['post', 'post-new'])
+			)
+		) {
 			wp_enqueue_style($this->plugin_name . '-react', MOS_PRODUCT_SPECIFICATIONS_TAB_URL . 'build/index.css');
 		}
 		// wp_enqueue_style($this->plugin_name . 'jquery-ui', MOS_PRODUCT_SPECIFICATIONS_TAB_URL . 'assets/css/jquery-ui.css', array(), $this->version, 'all');
@@ -134,7 +142,7 @@ class Admin
 				'before'
 			);
 		}
-		    // Get current admin screen
+		// Get current admin screen
 		$screen = get_current_screen();
 
 		// WooCommerce product edit & add new product pages
