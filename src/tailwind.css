@@ -22,3 +22,25 @@
     background-color: var(--semi-color-primary);
   }
 }
+
+
+.mos-specifications-editor input[type=date], 
+.mos-specifications-editor input[type=datetime-local], 
+.mos-specifications-editor input[type=datetime], 
+.mos-specifications-editor input[type=email], 
+.mos-specifications-editor input[type=month], 
+.mos-specifications-editor input[type=number], 
+.mos-specifications-editor input[type=password], 
+.mos-specifications-editor input[type=search], 
+.mos-specifications-editor input[type=tel], 
+.mos-specifications-editor input[type=text], 
+.mos-specifications-editor input[type=time], 
+.mos-specifications-editor input[type=url], 
+.mos-specifications-editor input[type=week], 
+.mos-specifications-editor select, 
+.mos-specifications-editor textarea {
+  width: 100%;
+}
+.mos-specifications-editor .mos-spec-groups .semi-card .semi-card-header .semi-card-header-wrapper {
+  align-items: center;
+}

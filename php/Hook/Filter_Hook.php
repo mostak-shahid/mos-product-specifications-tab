@@ -95,9 +95,12 @@ class Filter_Hook {
         $defaults = [            
             'general' => [
                 'enable' => true,
-                'table_position' => '',
+                'table_intro' => true,
                 'group_icon' => false,
-                'group_title' => false,
+                'group_tooltip' => false,
+                'group_intro' => false,
+                'spec_tooltip' => false,
+                // 'table_position' => '',
             ],
             'more' => [
                 'enable_scripts' => false,

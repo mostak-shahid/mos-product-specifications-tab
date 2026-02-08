@@ -55,6 +55,9 @@ class PublicClass
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+		// add_action('woocommerce_before_single_product_summary', array($this, 'mos_product_specifications_tab_output'));
+		// add_action('woocommerce_after_single_product_summary', array($this, 'mos_product_specifications_tab_output'));
+		add_filter( 'woocommerce_product_tabs', array($this, 'mos_add_custom_product_tab'));
 	}
 
 	/**
@@ -76,6 +79,13 @@ class PublicClass
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		// jQuery UI CSS (theme)
+		wp_enqueue_style(
+			$this->plugin_name . '-jquery-ui',
+			MOS_PRODUCT_SPECIFICATIONS_TAB_URL . 'assets/plugins/jquery-ui/jquery-ui.min.css',
+			array(),
+			$this->version,
+		);
 		wp_enqueue_style($this->plugin_name, MOS_PRODUCT_SPECIFICATIONS_TAB_URL . 'assets/css/style.css', array(), $this->version, 'all');
 		// wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/mos-product-specifications-tab-public.css', array(), $this->version, 'all' );
 		wp_enqueue_style($this->plugin_name . '-public', MOS_PRODUCT_SPECIFICATIONS_TAB_URL . 'public/css/public-style.css', array(), $this->version, 'all');
@@ -102,9 +112,12 @@ class PublicClass
 		 */
 
 		// wp_enqueue_script($this->plugin_name, plugin_dir_url(__DIR__) . 'assets/js/script.js', array('jquery'), $this->version, false);
+		// jQuery UI Tooltip
+    	wp_enqueue_script('jquery-ui-tooltip');
+
 		wp_enqueue_script($this->plugin_name, MOS_PRODUCT_SPECIFICATIONS_TAB_URL . 'assets/js/script.js', array('jquery'), $this->version, false);
-		wp_enqueue_script($this->plugin_name . '-public-ajax', plugin_dir_url(__FILE__) . 'js/public-ajax.js', array('jquery'), $this->version, false);
-		wp_enqueue_script($this->plugin_name . '-public-script', plugin_dir_url(__FILE__) . 'js/public-script.js', array('jquery'), $this->version, false);
+		wp_enqueue_script($this->plugin_name . '-public-ajax', MOS_PRODUCT_SPECIFICATIONS_TAB_URL . 'public/js/public-ajax.js', array('jquery'), $this->version, false);
+		wp_enqueue_script($this->plugin_name . '-public-script', MOS_PRODUCT_SPECIFICATIONS_TAB_URL . 'public/js/public-script.js', array('jquery'), $this->version, false);
 		$ajax_params = array(
 			'admin_url' => admin_url(),
 			'ajax_url' => admin_url('admin-ajax.php'),
@@ -123,6 +136,62 @@ class PublicClass
 			// wp_die(esc_html__('Nonce verification failed. Please try again.', 'mos-product-specifications-tab'));
 		}
 		wp_die();
+	}
+	function mos_add_custom_product_tab( $tabs ) {
+
+		$tabs['mos_custom_tab'] = array(
+			'title'    => esc_html__( 'Specifications', 'mos-product-specifications-tab' ),
+			'priority' => 0,
+			'callback' => array($this, 'mos_product_specifications_tab_output'),
+		);
+
+		return $tabs;
+	}
+	public function mos_product_specifications_tab_output(){
+		global $post;
+		$data = get_post_meta($post->ID, '_mos_specifications_data', true);
+		if (sizeof($data) > 0) : ?>
+			<?php foreach($data as $group) :  ?>
+				<div class="mos-product-specifications-group">
+					<div class="mos-product-specifications-table-heading">
+						<?php if (isset($group['group_icon']['url']) && !empty($group['group_icon']['url'])): ?>
+							<div class="mos-product-specifications-group-image-wrapper">
+								<img src="<?php echo esc_url($group['group_icon']['url']); ?>" alt="<?php echo esc_attr($group['group_title']); ?>" class="mos-product-specifications-group-icon" />
+							</div>
+						<?php endif?>
+						<div class="mos-product-specifications-group-content-wrapper">
+							<div class="mos-product-specifications-group-title-wrapper">
+								<?php echo isset($group['group_title']) ? '<h3 class="mos-product-specifications-group-title">' . esc_html($group['group_title']) . '</h3>' : ''; ?>
+								<?php echo isset($group['group_tooltip']) ? '<span class="mos-product-specifications-group-tooltip" title="' . esc_attr($group['group_tooltip']) . '"><span class="dashicons dashicons-editor-help"></span></span>' : ''; ?>
+							</div>
+							<?php echo isset($group['group_description']) ? '<p class="mos-product-specifications-group-description">' . esc_html($group['group_description']) . '</p>' : ''; ?>
+						</div>
+					</div>
+					<?php if (isset($group['specifications']) && is_array($group['specifications'])): ?>
+						<table>
+							<?php foreach ($group['specifications'] as $item): ?>
+								<tr>
+									<td>
+										<div class="mos-product-specifications-spec-title-wrapper">
+											<span class="mos-product-specifications-spec-title">
+												<?php echo esc_html($item['title']); ?>
+											</span>
+											<?php if (isset($item['tooltip']) && !empty($item['tooltip'])) : ?>
+												<span class="mos-product-specifications-spec-tooltip" title="<?php echo esc_attr($item['tooltip']); ?>">
+													<span class="dashicons dashicons-editor-help"></span>
+												</span>
+											<?php endif?>
+										</div>
+									</td>
+									<td><?php echo esc_html($item['description']); ?></td>
+								</tr>
+							<?php endforeach; ?>
+						</table>
+					<?php endif; ?>
+				</div>
+			<?php endforeach;?>
+
+		<?php endif;	
 	}
 }
 

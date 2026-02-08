@@ -1,0 +1,6 @@
+.mos-product-specifications-tab-plugin-card {
+  border: 1px solid var(--semi-color-border);
+}
+.mos-product-specifications-tab-plugin-card .semi-icon-star svg {
+  max-width: unset;
+}/*# sourceMappingURL=PluginCard.css.map */
