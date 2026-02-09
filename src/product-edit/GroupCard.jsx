@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { __ } from '@wordpress/i18n';
-import { Card, Button, Input, Popconfirm, Space, Avatar, Tooltip, Row, Col, Typography,  } from '@douyinfe/semi-ui';
+import { Card, Button, Input, Popconfirm, Space, Avatar, Tooltip, Row, Col, Typography, TextArea,  } from '@douyinfe/semi-ui';
 import { IconPlus, IconMinus, IconChevronUp, IconChevronDown, IconCopy, IconDelete, IconCamera, IconHelpCircle } from '@douyinfe/semi-icons';
 import SpecificationItem from './SpecificationItem';
 const { Paragraph, Title, Text } = Typography;
@@ -114,8 +114,8 @@ export default function GroupCard({
                 {expanded && (
                     <div className="mos-spec-group-body">
                         <div className="mos-spec-group-inputs-wrapper">
-                            <Row type="flex" gutter={[24, 24]} className='p-3'>
-                                <Col xs={24} lg={8}>
+                            <Row type="flex" gutter={12} className='p-3'>
+                                <Col xs={24} lg={12}>
                                     <div className='flex flex-col'>
                                         <Text>{__("Group Title", "mos-product-specifications-tab")}</Text>
                                         <Input
@@ -126,7 +126,7 @@ export default function GroupCard({
                                         />                                    
                                     </div> 
                                 </Col>                                 
-                                <Col xs={24} lg={8}>
+                                <Col xs={24} lg={12}>
                                     <div className='flex flex-col'>
                                         <Text>{__("Group Tooltip", "mos-product-specifications-tab")}</Text>
                                         <Input
@@ -138,10 +138,10 @@ export default function GroupCard({
                                     </div> 
                                     
                                 </Col>                     
-                                <Col xs={24} lg={8}>
+                                <Col xs={24}>
                                     <div className='flex flex-col'>
                                         <Text>{__("Group Description", "mos-product-specifications-tab")}</Text>
-                                        <Input
+                                        <TextArea
                                             placeholder={__('Group Description', 'mos-product-specifications-tab')}
                                             value={group.group_description}
                                             onChange={(value) => onUpdate(groupIndex, 'group_description', value)}

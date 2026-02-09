@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { __ } from '@wordpress/i18n';
-import { Button, Input, Space, Popconfirm, Card, Tooltip, Row, Col, Typography } from '@douyinfe/semi-ui';
+import { Button, Input, TextArea, Space, Popconfirm, Card, Tooltip, Row, Col, Typography } from '@douyinfe/semi-ui';
 import { IconPlus, IconMinus, IconChevronUp, IconChevronDown, IconCopy, IconDelete, IconHelpCircle } from '@douyinfe/semi-icons';
 
 const { Paragraph, Title, Text } = Typography;
@@ -88,8 +88,8 @@ export default function SpecificationItem({
 
                 {expanded && (
                     <>
-                        <Row type="flex" gutter={[24, 24]} className='p-3'>
-                            <Col xs={24} lg={8}>
+                        <Row type="flex" gutter={12} className='p-3'>
+                            <Col xs={24} lg={12}>
                                 <div className='flex flex-col'>
                                     <Text>{__("Title", "mos-product-specifications-tab")}</Text>
                                     <Input
@@ -100,7 +100,7 @@ export default function SpecificationItem({
                                     />                                    
                                 </div>      
                             </Col>                                 
-                            <Col xs={24} lg={8}>
+                            <Col xs={24} lg={12}>
                                 <div className='flex flex-col'>
                                     <Text>{__("Tooltip", "mos-product-specifications-tab")}</Text>
                                     <Input
@@ -111,10 +111,10 @@ export default function SpecificationItem({
                                     />                                    
                                 </div>  
                             </Col>                               
-                            <Col xs={24} lg={8}>
+                            <Col xs={24}>
                                 <div className='flex flex-col'>
                                     <Text>{__("Description", "mos-product-specifications-tab")}</Text>
-                                    <Input
+                                    <TextArea
                                         placeholder={__('Description', 'mos-product-specifications-tab')}
                                         value={spec.description}
                                         onChange={(value) => onUpdate(groupIndex, specIndex, 'description', value)}

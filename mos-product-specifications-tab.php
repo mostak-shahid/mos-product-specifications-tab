@@ -137,7 +137,7 @@ register_activation_hook( __FILE__, function () {
 	if ( ! class_exists( 'WooCommerce' ) ) {
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 		wp_die(
-			esc_html__( 'This plugin requires WooCommerce to be installed and active.', 'your-plugin-textdomain' ),
+			esc_html__( 'This plugin requires WooCommerce to be installed and active.', 'mos-product-specifications-tab' ),
 			'Plugin dependency check',
 			[ 'back_link' => true ]
 		);

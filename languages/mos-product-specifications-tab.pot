@@ -49,7 +49,7 @@ msgstr ""
 #: php/API/Ajax_API.php:125
 #: php/API/Ajax_API.php:149
 #: php/API/Ajax_API.php:330
-#: php/Public/PublicClass.php:122
+#: php/Public/Public.php:122
 msgid "Nonce verification failed. Please try again."
 msgstr ""
 

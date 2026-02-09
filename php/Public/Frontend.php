@@ -1,7 +1,7 @@
 <?php
 
 namespace MosPress\MosProductSpecificationsTab\Public;
-
+if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * The public-facing functionality of the plugin.
  *
@@ -22,7 +22,7 @@ namespace MosPress\MosProductSpecificationsTab\Public;
  * @subpackage Mos_Product_Specifications_Tab/public
  * @author     Md. Mostak Shahid <mostak.shahid@gmail.com>
  */
-class PublicClass
+class Frontend
 {
 
 	/**
@@ -178,7 +178,7 @@ class PublicClass
 
 									</div>
 									<?php if (isset($options['general']['group_intro']) && !empty($options['general']['group_intro'])) : ?>
-										<?php echo isset($group['group_description']) ? '<p class="mos-product-specifications-group-description">' . esc_html($group['group_description']) . '</p>' : ''; ?>
+										<?php echo isset($group['group_description']) ? '<p class="mos-product-specifications-group-description">' . nl2br(esc_html($group['group_description'])) . '</p>' : ''; ?>
 									<?php endif?>
 								</div>
 							</div>
@@ -201,7 +201,7 @@ class PublicClass
 												<?php endif?>
 											</div>
 										</td>
-										<td><?php echo esc_html($item['description']); ?></td>
+										<td><?php echo nl2br(esc_html($item['description'])); ?></td>
 									</tr>
 								<?php endforeach; ?>
 							</table>

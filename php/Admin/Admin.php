@@ -2,6 +2,9 @@
 
 namespace MosPress\MosProductSpecificationsTab\Admin;
 
+use MosPress\MosProductSpecificationsTab\Helpers\Utils;
+if ( ! defined( 'ABSPATH' ) ) exit;
+use MosPress\MosProductSpecificationsTab\Helpers\Utils;
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -242,9 +245,12 @@ class Admin
 	 */
 	public function mpst_save_product_tab_data( $post_id, $post, $update ) {
 		global $post;
-		if (isset($_POST['mos_specifications_tab_field']) && wp_verify_nonce($_POST['mos_specifications_tab_field'], 'mos_specifications_tab_action')) {
+		if (isset($_POST['mos_specifications_tab_field']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['mos_specifications_tab_field'])), 'mos_specifications_tab_action')) {
 			if(isset($_POST['_mos_specifications_data'])) {
-				$data = $_POST['_mos_specifications_data'];
+				// Properly unslash and sanitize the multidimensional array
+				$unslashed_data = wp_unslash($_POST['_mos_specifications_data']);
+				$data = $this->sanitize_specifications_array($unslashed_data);
+				
 				if (is_array($data)) {
 					update_post_meta( $post->ID, '_mos_specifications_data', $data );
 				} else if (!empty($data)) {
@@ -257,6 +263,44 @@ class Admin
 				update_post_meta( $post->ID, '_mos_specifications_data', array() );
 			}
 		}
+	}
+
+	/**
+	 * Sanitize multidimensional specifications array
+	 *
+	 * @param array $data The data to sanitize
+	 * @return array The sanitized data
+	 */
+	private function sanitize_specifications_array($data) {
+		if (!is_array($data)) {
+			return sanitize_text_field($data);
+		}
+
+		$sanitized = array();
+		foreach ($data as $key => $value) {
+			if (is_array($value)) {
+				$sanitized[$key] = $this->sanitize_specifications_array($value);
+			} else {
+				// Handle different types of fields appropriately
+				if (is_string($value)) {
+					// For URLs, use esc_url_raw
+					if (filter_var($value, FILTER_VALIDATE_URL)) {
+						$sanitized[$key] = esc_url_raw($value);
+					} else {
+						// For regular text, use sanitize_textarea_field for descriptions and sanitize_text_field for others
+						if (strpos($key, 'description') !== false || strpos($key, 'tooltip') !== false) {
+							$sanitized[$key] = sanitize_textarea_field($value);
+						} else {
+							$sanitized[$key] = sanitize_text_field($value);
+						}
+					}
+				} else {
+					$sanitized[$key] = $value;
+				}
+			}
+		}
+
+		return $sanitized;
 	}
 }
 

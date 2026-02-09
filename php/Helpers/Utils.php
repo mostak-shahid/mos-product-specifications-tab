@@ -13,4 +13,11 @@ class Utils {
 			return sanitize_text_field( wp_unslash($_SERVER['REMOTE_ADDR']));
 		}
 	}
+	public static function sanitize_array( $data ) {
+        if ( is_array( $data ) ) {
+            return array_map( [ __CLASS__, 'sanitize_array' ], $data );
+        }
+
+        return sanitize_text_field( wp_unslash( $data ) );
+    }
 }

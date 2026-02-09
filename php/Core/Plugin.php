@@ -122,7 +122,7 @@ class Plugin
 	private function define_public_hooks()
 	{
 
-		$plugin_public = new \MosPress\MosProductSpecificationsTab\Public\PublicClass($this->get_plugin_name(), $this->get_version());
+		$plugin_public = new \MosPress\MosProductSpecificationsTab\Public\Frontend($this->get_plugin_name(), $this->get_version());
 		add_action('wp_enqueue_scripts', [$plugin_public, 'enqueue_styles']);
 		add_action('wp_enqueue_scripts', [$plugin_public, 'enqueue_scripts']);
 		// Save settings by ajax
