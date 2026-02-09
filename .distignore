@@ -50,3 +50,4 @@ tests
 build
 postcss.config.js
 tailwind.config.js
+.gitattributes

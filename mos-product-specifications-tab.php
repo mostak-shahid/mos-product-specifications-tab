@@ -16,7 +16,7 @@
  * Plugin Name:       Product specifications tab for WooCommerce
  * Plugin URI:        https://mostak-shahid.github.io/mos-product-specifications-tab/
  * Description:       You can add an infinite number of specs to any or all of your products using the Product specifications tab for WooCommerce plugin. You can add any kind of information to the product using the WYSIWYG editor available to each group. The options are unlimited.
- * Version:           1.0.2
+ * Version:           1.0.1
  * Author:            Md. Mostak Shahid
  * Author URI:        https://mostak-shahid.github.io/
  * License:           GPL-2.0+
@@ -42,7 +42,7 @@ if (!defined('ABSPATH')) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('MOS_PRODUCT_SPECIFICATIONS_TAB_VERSION', '1.0.2');
+define('MOS_PRODUCT_SPECIFICATIONS_TAB_VERSION', '1.0.1');
 define('MOS_PRODUCT_SPECIFICATIONS_TAB_NAME', 'Product specifications tab for WooCommerce');
 define('MOS_PRODUCT_SPECIFICATIONS_TAB_PATH', plugin_dir_path(__FILE__));
 define('MOS_PRODUCT_SPECIFICATIONS_TAB_URL', plugin_dir_url(__FILE__));

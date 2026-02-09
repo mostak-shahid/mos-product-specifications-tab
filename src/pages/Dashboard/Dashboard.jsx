@@ -52,6 +52,56 @@ export default function Dashboard() {
                             title={__("Features", "mos-product-specifications-tab")}
                             className="dashboard-features-card mb-6"
                         >
+                            <Row type="flex" gutter={[24,24]}>
+                                <Col lg={8}>
+                                    <Card style={{height: '100%'}}>
+                                        <Title heading={4}>{__("Easy Product Specification Tables", "mos-product-specifications-tab")}</Title>
+                                        <Paragraph>
+                                            {__("Quickly build clear product specification tables with an intuitive interface, requiring no coding knowledge, saving time during product setup process.", "mos-product-specifications-tab")}
+                                        </Paragraph>
+                                    </Card>
+                                </Col>
+                                <Col lg={8}>
+                                    <Card style={{height: '100%'}}>
+                                        <Title heading={4}>{__("Multiple Tables per Product", "mos-product-specifications-tab")}</Title>
+                                        <Paragraph>
+                                            {__("Add and manage multiple specification tables per product, perfect for variants, bundles, or complex products with diverse technical details requirements.", "mos-product-specifications-tab")}
+                                        </Paragraph>
+                                    </Card>
+                                </Col>
+                                <Col lg={8}>
+                                    <Card style={{height: '100%'}}>
+                                        <Title heading={4}>{__("Group and Spec Sorting", "mos-product-specifications-tab")}</Title>
+                                        <Paragraph>
+                                            {__("Create, reorder, and sort specification groups and individual fields easily, ensuring information appears logically and improves customer readability and comprehension.", "mos-product-specifications-tab")}
+                                        </Paragraph>
+                                    </Card>
+                                </Col>
+                                <Col lg={8}>
+                                    <Card style={{height: '100%'}}>
+                                        <Title heading={4}>{__("Hide Specification Tab", "mos-product-specifications-tab")}</Title>
+                                        <Paragraph>
+                                            {__("Disable the product specification tab whenever needed, keeping product pages clean when specifications are unnecessary or temporarily unavailable for customers.", "mos-product-specifications-tab")}
+                                        </Paragraph>
+                                    </Card>
+                                </Col>
+                                <Col lg={8}>
+                                    <Card style={{height: '100%'}}>
+                                        <Title heading={4}>{__("Shortcode Support (Upcoming)", "mos-product-specifications-tab")}</Title>
+                                        <Paragraph>
+                                            {__("Use a flexible shortcode to place specification tables anywhere, enabling custom layouts, landing pages, and dynamic content placement options soon.", "mos-product-specifications-tab")}
+                                        </Paragraph>
+                                    </Card>
+                                </Col>
+                                <Col lg={8}>
+                                    <Card style={{height: '100%'}}>
+                                        <Title heading={4}>{__("Fully Customizable", "mos-product-specifications-tab")}</Title>
+                                        <Paragraph>
+                                            {__("Customize the appearance and behavior of specification tables to match your brand and design preferences.", "mos-product-specifications-tab")}
+                                        </Paragraph>
+                                    </Card>
+                                </Col>
+                            </Row>
                             {/* {Object.values(settingsMenu).map((feature, index) => (
                                 <div className="feature" key={index}>
                                     <Title heading={4}>{feature?.title}</Title>
@@ -66,9 +116,6 @@ export default function Dashboard() {
                                     )}
                                 </div>
                             ))} */}
-                            <Paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto blanditiis repudiandae quod, aliquam laborum dolores aliquid dolorem alias ratione facere ab enim unde et, tempore repellendus molestias quaerat neque, reiciendis voluptate quas necessitatibus. Tenetur quos laudantium, magnam totam excepturi id incidunt aspernatur corporis ducimus pariatur omnis dolorum minus explicabo iusto veniam inventore cupiditate provident eum laborum. Quibusdam rem neque maiores fugiat, unde similique saepe expedita natus dolor est pariatur tempore excepturi soluta maxime voluptate facere cupiditate fugit modi enim accusantium? Dignissimos magni, ut, sit deserunt eaque in ea modi autem cum, ex beatae similique aperiam obcaecati eius eligendi perferendis quasi.</Paragraph>
-                            <Paragraph>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi modi libero repellat optio dolor sunt in ipsam dicta numquam quas magnam nam quidem praesentium vitae quod earum, qui iusto consectetur repellendus exercitationem eligendi tempore tenetur commodi labore! Tempora aspernatur ducimus odit nihil rem veniam dignissimos a officia id, voluptate perspiciatis!</Paragraph>
-                            <Paragraph>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum, rerum labore? Doloribus eaque exercitationem eligendi odio! Maiores voluptatum soluta voluptatem distinctio quos blanditiis consectetur ea?</Paragraph>
                         </Card>
                         <Card 
                             title={__("Extend Your Website", "mos-product-specifications-tab")}

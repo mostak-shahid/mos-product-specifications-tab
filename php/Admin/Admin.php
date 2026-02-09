@@ -2,9 +2,7 @@
 
 namespace MosPress\MosProductSpecificationsTab\Admin;
 
-use MosPress\MosProductSpecificationsTab\Helpers\Utils;
 if ( ! defined( 'ABSPATH' ) ) exit;
-use MosPress\MosProductSpecificationsTab\Helpers\Utils;
 /**
  * The admin-specific functionality of the plugin.
  *
