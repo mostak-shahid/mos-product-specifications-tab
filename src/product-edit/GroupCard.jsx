@@ -117,12 +117,13 @@ export default function GroupCard({
                             <Row type="flex" gutter={12} className='p-3'>
                                 <Col xs={24} lg={12}>
                                     <div className='flex flex-col'>
-                                        <Text>{__("Group Title", "mos-product-specifications-tab")}</Text>
+                                        <Text>{__("Group Title", "mos-product-specifications-tab")} <Text type="danger">*</Text></Text>
                                         <Input
                                             placeholder={__('Group Title', 'mos-product-specifications-tab')}
                                             value={group.group_title}
                                             onChange={(value) => onUpdate(groupIndex, 'group_title', value)}
                                             className="mos-spec-group-title-input"
+                                            required={true}
                                         />                                    
                                     </div> 
                                 </Col>                                 

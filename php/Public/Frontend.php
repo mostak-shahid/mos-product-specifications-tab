@@ -55,9 +55,12 @@ class Frontend
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-		// add_action('woocommerce_before_single_product_summary', array($this, 'mos_product_specifications_tab_output'));
-		// add_action('woocommerce_after_single_product_summary', array($this, 'mos_product_specifications_tab_output'));
-		add_filter( 'woocommerce_product_tabs', array($this, 'mos_add_custom_product_tab'));
+		$options = mos_product_specifications_tab_get_option();
+		if (isset($options['general']['enable']) && !empty($options['general']['enable'])) {
+			// add_action('woocommerce_before_single_product_summary', array($this, 'mos_product_specifications_tab_output'));
+			// add_action('woocommerce_after_single_product_summary', array($this, 'mos_product_specifications_tab_output'));
+			add_filter( 'woocommerce_product_tabs', array($this, 'mos_add_custom_product_tab'));
+		}
 	}
 
 	/**
@@ -148,68 +151,68 @@ class Frontend
 		return $tabs;
 	}
 	public function mos_product_specifications_tab_output(){
-		$options = mos_product_specifications_tab_get_option();
-		// var_dump($options);
-		?>
-			<?php if (isset($options['general']['enable']) && !empty($options['general']['enable'])) :
-			global $post;
-			$data = get_post_meta($post->ID, '_mos_specifications_data', true);
-			if (is_array($data) && sizeof($data) > 0) : ?>
-				<?php foreach($data as $group) :  ?>
-					<div class="mos-product-specifications-group">
+		global $post;
+		$data = get_post_meta($post->ID, '_mos_specifications_data', true);
+		if (is_array($data) && sizeof($data) > 0) : ?>
+			<?php foreach($data as $group) :  ?>
+				<div class="mos-product-specifications-group">
+					<table>
 						<?php if (isset($options['general']['table_intro']) && !empty($options['general']['table_intro'])) : ?>
-							<div class="mos-product-specifications-table-heading">
-								<?php if (isset($options['general']['group_icon']) && !empty($options['general']['group_icon'])) : ?>
-									<?php if (isset($group['group_icon']['url']) && !empty($group['group_icon']['url'])): ?>
-										<div class="mos-product-specifications-group-image-wrapper">
-											<img src="<?php echo esc_url($group['group_icon']['url']); ?>" alt="<?php echo esc_attr($group['group_title']); ?>" class="mos-product-specifications-group-icon" />
-										</div>
-									<?php endif?>
-								<?php endif?>
-
-								<div class="mos-product-specifications-group-content-wrapper">
-									<div class="mos-product-specifications-group-title-wrapper">
-										<?php echo isset($group['group_title']) ? '<h3 class="mos-product-specifications-group-title">' . esc_html($group['group_title']) . '</h3>' : ''; ?>
-										<?php if (isset($options['general']['group_tooltip']) && !empty($options['general']['group_tooltip'])) : ?>
-											<?php if (isset($group['group_tooltip']) && !empty($group['group_tooltip'])) : ?>
-												<span class="mos-product-specifications-group-tooltip" title="<?php echo esc_attr($group['group_tooltip'])?>"><span class="dashicons dashicons-editor-help"></span></span>
+							<tr>
+								<td colspan="2">
+									<div class="mos-product-specifications-table-heading">
+										<?php if (isset($options['general']['group_icon']) && !empty($options['general']['group_icon'])) : ?>
+											<?php if (isset($group['group_icon']['url']) && !empty($group['group_icon']['url'])): ?>
+												<div class="mos-product-specifications-group-image-wrapper">
+													<img src="<?php echo esc_url($group['group_icon']['url']); ?>" alt="<?php echo esc_attr($group['group_title']); ?>" class="mos-product-specifications-group-icon" />
+												</div>
 											<?php endif?>
 										<?php endif?>
 
-									</div>
-									<?php if (isset($options['general']['group_intro']) && !empty($options['general']['group_intro'])) : ?>
-										<?php echo isset($group['group_description']) ? '<p class="mos-product-specifications-group-description">' . nl2br(esc_html($group['group_description'])) . '</p>' : ''; ?>
-									<?php endif?>
-								</div>
-							</div>
-						<?php endif; ?>
-						<?php if (isset($group['specifications']) && is_array($group['specifications'])): ?>
-							<table>
-								<?php foreach ($group['specifications'] as $item): ?>
-									<tr>
-										<td>
-											<div class="mos-product-specifications-spec-title-wrapper">
-												<span class="mos-product-specifications-spec-title">
-													<?php echo esc_html($item['title']); ?>
-												</span>
-												<?php if (isset($options['general']['spec_tooltip']) && !empty($options['general']['spec_tooltip'])) : ?>
-													<?php if (isset($item['tooltip']) && !empty($item['tooltip'])) : ?>
-														<span class="mos-product-specifications-spec-tooltip" title="<?php echo esc_attr($item['tooltip']); ?>">
-															<span class="dashicons dashicons-editor-help"></span>
-														</span>
+										<div class="mos-product-specifications-group-content-wrapper">
+											<div class="mos-product-specifications-group-title-wrapper">
+												<?php echo isset($group['group_title']) ? '<h3 class="mos-product-specifications-group-title">' . esc_html($group['group_title']) . '</h3>' : ''; ?>
+												<?php if (isset($options['general']['group_tooltip']) && !empty($options['general']['group_tooltip'])) : ?>
+													<?php if (isset($group['group_tooltip']) && !empty($group['group_tooltip'])) : ?>
+														<span class="mos-product-specifications-group-tooltip" title="<?php echo esc_attr($group['group_tooltip'])?>"><span class="dashicons dashicons-editor-help"></span></span>
 													<?php endif?>
 												<?php endif?>
+
 											</div>
-										</td>
-										<td><?php echo nl2br(esc_html($item['description'])); ?></td>
-									</tr>
-								<?php endforeach; ?>
-							</table>
+											<?php if (isset($options['general']['group_intro']) && !empty($options['general']['group_intro'])) : ?>
+												<?php echo isset($group['group_description']) ? '<p class="mos-product-specifications-group-description">' . nl2br(esc_html($group['group_description'])) . '</p>' : ''; ?>
+											<?php endif?>
+										</div>
+									</div>
+								</td>
+							</tr>
+							
 						<?php endif; ?>
-					</div>
-				<?php endforeach;?>
-			<?php endif;
-		endif;	
+						<?php if (isset($group['specifications']) && is_array($group['specifications'])): ?>							
+							<?php foreach ($group['specifications'] as $item): ?>
+								<tr>
+									<td>
+										<div class="mos-product-specifications-spec-title-wrapper">
+											<span class="mos-product-specifications-spec-title">
+												<?php echo esc_html($item['title']); ?>
+											</span>
+											<?php if (isset($options['general']['spec_tooltip']) && !empty($options['general']['spec_tooltip'])) : ?>
+												<?php if (isset($item['tooltip']) && !empty($item['tooltip'])) : ?>
+													<span class="mos-product-specifications-spec-tooltip" title="<?php echo esc_attr($item['tooltip']); ?>">
+														<span class="dashicons dashicons-editor-help"></span>
+													</span>
+												<?php endif?>
+											<?php endif?>
+										</div>
+									</td>
+									<td><?php echo nl2br(esc_html($item['description'])); ?></td>
+								</tr>
+							<?php endforeach; ?>
+						<?php endif; ?>
+					</table>
+				</div>
+			<?php endforeach;?>
+		<?php endif;
 	}
 }
 

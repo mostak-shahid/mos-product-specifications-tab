@@ -91,12 +91,13 @@ export default function SpecificationItem({
                         <Row type="flex" gutter={12} className='p-3'>
                             <Col xs={24} lg={12}>
                                 <div className='flex flex-col'>
-                                    <Text>{__("Title", "mos-product-specifications-tab")}</Text>
+                                    <Text>{__("Title", "mos-product-specifications-tab")} <Text type="danger">*</Text></Text>
                                     <Input
                                         placeholder={__('Title', 'mos-product-specifications-tab')}
                                         value={spec.title}
                                         onChange={(value) => onUpdate(groupIndex, specIndex, 'title', value)}
                                         className="mos-spec-title"
+                                        required={true}
                                     />                                    
                                 </div>      
                             </Col>                                 
@@ -113,12 +114,13 @@ export default function SpecificationItem({
                             </Col>                               
                             <Col xs={24}>
                                 <div className='flex flex-col'>
-                                    <Text>{__("Description", "mos-product-specifications-tab")}</Text>
+                                    <Text>{__("Description", "mos-product-specifications-tab")} <Text type="danger">*</Text></Text>
                                     <TextArea
                                         placeholder={__('Description', 'mos-product-specifications-tab')}
                                         value={spec.description}
                                         onChange={(value) => onUpdate(groupIndex, specIndex, 'description', value)}
                                         className="mos-spec-description"
+                                        required={true}
                                     />                                    
                                 </div>  
                             </Col>
