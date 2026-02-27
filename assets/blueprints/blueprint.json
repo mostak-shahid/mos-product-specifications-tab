@@ -12,7 +12,7 @@
     "kitchen-sink"
   ],
   "meta": {
-    "title": "Mos Product Specifications Tab Plugin Blueprint",
+    "title": "Product specifications tab for WooCommerce Plugin Blueprint",
     "description": "Security Plugin by Programmelab",
     "author": "Programmelab",
     "categories": [
@@ -47,7 +47,7 @@
     {
       "step": "setSiteOptions",
       "options": {
-        "blogname": "Mos Product Specifications Tab Demo"
+        "blogname": "Product specifications tab for WooCommerce Demo"
       }
     }
   ]

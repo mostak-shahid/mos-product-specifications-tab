@@ -1,0 +1,25 @@
+.mos-product-specifications-tab-settings-template #wpcontent {
+  padding-left: 0;
+}
+.mos-product-specifications-tab-settings-template input[type=color],
+.mos-product-specifications-tab-settings-template input[type=date],
+.mos-product-specifications-tab-settings-template input[type=datetime-local],
+.mos-product-specifications-tab-settings-template input[type=datetime],
+.mos-product-specifications-tab-settings-template input[type=email],
+.mos-product-specifications-tab-settings-template input[type=month],
+.mos-product-specifications-tab-settings-template input[type=number],
+.mos-product-specifications-tab-settings-template input[type=password],
+.mos-product-specifications-tab-settings-template input[type=search],
+.mos-product-specifications-tab-settings-template input[type=tel],
+.mos-product-specifications-tab-settings-template input[type=text],
+.mos-product-specifications-tab-settings-template input[type=time],
+.mos-product-specifications-tab-settings-template input[type=url],
+.mos-product-specifications-tab-settings-template input[type=week],
+.mos-product-specifications-tab-settings-template select,
+.mos-product-specifications-tab-settings-template textarea {
+  border-radius: unset;
+  border: unset;
+  background-color: unset;
+  width: 100%;
+  float: unset;
+}/*# sourceMappingURL=index.css.map */

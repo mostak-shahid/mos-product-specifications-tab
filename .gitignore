@@ -46,5 +46,6 @@ wp-config-local.php
 *.map.css
 
 # Ignore build directories
+assets/build/
 build/
 dist/

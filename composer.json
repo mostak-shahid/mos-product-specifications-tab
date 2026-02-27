@@ -1,11 +1,11 @@
 {
   "name": "mospress/mos-product-specifications-tab",
-  "description": "You can add an infinite number of specs to any or all of your products using the Product specifications tab for WooCommerce plugin. You can add any kind of information to the product using the WYSIWYG editor available to each group. The options are unlimited.",
+  "description": "Create professional, structured WooCommerce product specification tables with unlimited rows, drag & drop sorting, tooltips, and responsive design — lightweight and SEO-friendly.",
   "type": "wordpress-plugin",
   "license": "GPLv2",
   "autoload": {
     "psr-4": {
-      "MosPress\\MosProductSpecificationsTab\\": "php/"
+      "MosPress\\MosProductSpecificationsTab\\": "includes/"
     }
   },
   "authors": [
