@@ -16,7 +16,7 @@
  * Plugin Name:       Product specifications tab for WooCommerce
  * Plugin URI:        https://mostak-shahid.github.io/mos-product-specifications-tab/
  * Description:       Create professional, structured WooCommerce product specification tables with unlimited rows, drag & drop sorting, tooltips, and responsive design — lightweight and SEO-friendly.
- * Version:           1.0.0
+ * Version:           1.0.2
  * Author:            Md. Mostak Shahid
  * Author URI:        https://mostak-shahid.github.io/
  * License:           GPL-2.0+
@@ -31,7 +31,7 @@ defined('ABSPATH') || exit;
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('MOS_PRODUCT_SPECIFICATIONS_TAB_VERSION', '1.0.0');
+define('MOS_PRODUCT_SPECIFICATIONS_TAB_VERSION', '1.0.2');
 define('MOS_PRODUCT_SPECIFICATIONS_TAB_NAME', 'Product specifications tab for WooCommerce');
 define('MOS_PRODUCT_SPECIFICATIONS_TAB_PATH', plugin_dir_path(__FILE__));
 define('MOS_PRODUCT_SPECIFICATIONS_TAB_URL', plugin_dir_url(__FILE__));
