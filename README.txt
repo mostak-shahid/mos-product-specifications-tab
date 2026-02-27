@@ -128,6 +128,12 @@ You can use the WordPress.org support forum from the plugin page.
 
 == Changelog ==
 
+= 1.0.2 =
+* Tested up to WooCommerce 10.5.2
+* Fix: Feedback page bug
+* Fix: Broken link 
+* Updated internal libraries
+
 = 1.0.1 =
 * Tested up to WordPress 6.9
 * Tested up to WooCommerce 10.5.0
