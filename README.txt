@@ -123,8 +123,17 @@ You can use the WordPress.org support forum from the plugin page.
 
 == Screenshots ==
 
-1. Admin specifications panel
-2. Frontend specification table display
+1. Dashboard Page
+2. General Settings Page
+3. Import Export Settings Page
+4. More Settings Page
+5. Tools Settings Page
+6. Log Table Page
+7. Analytics Page
+8. Feedback Page
+9. Darkmode Example
+10. Specification input panel
+11. Specification output panel
 
 == Changelog ==
 
