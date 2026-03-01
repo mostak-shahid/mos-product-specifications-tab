@@ -245,7 +245,7 @@ class AdminClass
 		if (isset($_POST['mos_specifications_tab_field']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['mos_specifications_tab_field'])), 'mos_specifications_tab_action')) {
 			if(isset($_POST['_mos_specifications_data'])) {
 				// Properly unslash and sanitize the multidimensional array
-				$unslashed_data = wp_unslash($_POST['_mos_specifications_data']);
+				$unslashed_data = sanitize_text_field(wp_unslash($_POST['_mos_specifications_data']));
 				$data = $this->sanitize_specifications_array($unslashed_data);
 				
 				if (is_array($data)) {

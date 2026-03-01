@@ -1072,7 +1072,7 @@ class Rest_API
         $response = wp_remote_post($webhook_url, $args);
 
         if (is_wp_error($response)) {
-            error_log(sprintf(__('Mos Product Specifications Tab - Failed to send feedback to webhook: %s', 'mos-product-specifications-tab'), $response->get_error_message()));
+            // error_log(sprintf(__('Mos Product Specifications Tab - Failed to send feedback to webhook: %s', 'mos-product-specifications-tab'), $response->get_error_message()));
             return false;
         }
 

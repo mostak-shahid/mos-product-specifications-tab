@@ -369,5 +369,5 @@ function mos_product_specifications_tab_data_cleanup(){
 	}
 
 	// Log the uninstall (optional)
-	error_log( 'Product specifications tab for WooCommerce: Complete uninstall cleanup completed.' );
+	// error_log( 'Product specifications tab for WooCommerce: Complete uninstall cleanup completed.' );
 }

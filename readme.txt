@@ -1,6 +1,6 @@
 === Product Specifications Tab for WooCommerce ===
 Contributors: mostakshahid
-Tags: woocommerce product specifications, product specification table, woocommerce specs, custom product tab, product details table, technical specifications
+Tags: woocommerce product specifications, product specification table, woocommerce specs, custom product tab, product details table
 Requires at least: 6.6
 Tested up to: 6.9
 Requires PHP: 7.4
@@ -8,7 +8,7 @@ Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Create professional, structured WooCommerce product specification tables with unlimited rows, drag & drop sorting, tooltips, and responsive design — lightweight and SEO-friendly.
+Create structured WooCommerce product specification tables with unlimited rows, drag & drop sorting, tooltips, and responsive design.
 
 == Description ==
 
