@@ -100,33 +100,33 @@ export default function App() {
         }
     };
 
-    useEffect(() => {
-        const fetchNews = async () => {
-            try {
-                const response = await fetch('https://raw.githubusercontent.com/mostak-shahid/update/refs/heads/master/plugin-news.json');
-                const data = await response.json();
-                setNewsItems(data);
-            } catch (error) {
-                console.error("Error fetching news:", error);
-            }
-        };
-        fetchNews();
+    // useEffect(() => {
+    //     const fetchNews = async () => {
+    //         try {
+    //             const response = await fetch('https://raw.githubusercontent.com/mostak-shahid/update/refs/heads/master/plugin-news.json');
+    //             const data = await response.json();
+    //             setNewsItems(data);
+    //         } catch (error) {
+    //             console.error("Error fetching news:", error);
+    //         }
+    //     };
+    //     fetchNews();
 
-        const fetchReadNews = async () => {
-            try {
-                const response = await apiFetch({
-                    path: '/mos-product-specifications-tab/v1/get-option?option_name=mospress_read_news',
-                    method: 'GET'
-                });
-                if (response && Array.isArray(response)) {
-                    setReadNewsIds(response);
-                }
-            } catch (error) {
-                console.error("Error fetching read news:", error);
-            }
-        };
-        fetchReadNews();
-    }, []); 
+    //     const fetchReadNews = async () => {
+    //         try {
+    //             const response = await apiFetch({
+    //                 path: '/mos-product-specifications-tab/v1/get-option?option_name=mospress_read_news',
+    //                 method: 'GET'
+    //             });
+    //             if (response && Array.isArray(response)) {
+    //                 setReadNewsIds(response);
+    //             }
+    //         } catch (error) {
+    //             console.error("Error fetching read news:", error);
+    //         }
+    //     };
+    //     fetchReadNews();
+    // }, []); 
 
     const handleNewsVisible = (visible) => {
         setNewsVisible(visible);
@@ -197,7 +197,7 @@ export default function App() {
                                     <IconCustomerSupport/>
                                 </a>
                                 <a
-                                    href="https://wordpress.org/support/plugin/mos-product-specifications-tab/reviews/?filter=5#new-post"
+                                    href="https://wordpress.org/support/plugin/mos-product-specifications-tab/reviews/"
                                     target="_blank"
                                     rel="noreferrer noopener"
                                     aria-label={ __(
@@ -226,14 +226,14 @@ export default function App() {
 
                                     onClick={ () =>
                                         window.open(
-                                            'https://wordpress.org/support/plugin/mos-product-specifications-tab/reviews/?filter=5#new-post',
+                                            'https://wordpress.org/support/plugin/mos-product-specifications-tab/reviews/',
                                             '_blank'
                                         )
                                     }
                                 />
-                                <Badge count={newsItems.filter(item => !readNewsIds.includes(item.id)).length || 0}>
+                                {/* <Badge count={newsItems.filter(item => !readNewsIds.includes(item.id)).length || 0}>
                                     <Button theme='outline' icon={<IconBellStroked />} onClick={() => handleNewsVisible(true)} aria-label="Screenshot" />
-                                </Badge>
+                                </Badge> */}
                             </Space>
                         )}
                     />

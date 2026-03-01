@@ -1,4 +1,4 @@
-=== Product Specifications Tab for WooCommerce ===
+=== MOS Product Specifications for WooCommerce ===
 Contributors: mostakshahid
 Tags: woocommerce product specifications, product specification table, woocommerce specs, custom product tab, product details table
 Requires at least: 6.6
@@ -12,7 +12,7 @@ Create structured WooCommerce product specification tables with unlimited rows, 
 
 == Description ==
 
-Product Specifications Tab for WooCommerce allows you to display detailed product information in a clean, structured, and professional specification table inside a dedicated WooCommerce product tab.
+MOS Product Specifications for WooCommerce allows you to display detailed product information in a clean, structured, and professional specification table inside a dedicated WooCommerce product tab.
 
 Clear product information builds trust. The more organized and detailed your product data is, the easier it becomes for customers to make confident purchase decisions.
 

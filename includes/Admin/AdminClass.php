@@ -136,7 +136,7 @@ class AdminClass
 				$this->plugin_name . '-app',
 				sprintf(
 					'window.wpApiSettings = { root: "%s", nonce: "%s" };',
-					esc_url_raw( rest_url() ),
+					esc_url( rest_url() ),
 					wp_create_nonce( 'wp_rest' )
 				),
 				'before'
@@ -162,7 +162,7 @@ class AdminClass
 				$this->plugin_name . '-productEdit',
 				sprintf(
 					'window.wpApiSettings = { root: "%s", nonce: "%s" };',
-					esc_url_raw(rest_url()),
+					esc_url(rest_url()),
 					wp_create_nonce('wp_rest')
 				),
 				'before'

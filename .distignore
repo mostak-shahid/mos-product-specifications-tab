@@ -8,7 +8,6 @@ bitbucket-pipelines.yml
 # Dependency & build tools
 node_modules/
 bin/
-composer.json
 composer.lock
 package.json
 package-lock.json
@@ -22,7 +21,9 @@ Gruntfile.js
 .eslintignore
 
 # Source & tests
+docs/
 src/
+assets/src/
 tests/
 Resources/
 includes/CLI/
@@ -64,5 +65,3 @@ README.md
 **/*.map
 **/*.css.map
 **/*.js.LICENSE.txt
-
-Resources/

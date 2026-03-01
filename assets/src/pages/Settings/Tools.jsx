@@ -95,42 +95,42 @@ const Tools = () => {
     /* ----------------------------------
        Fetch deactivation link
     ----------------------------------- */
-    useEffect(() => {
-        const fetchDeactiveLink = async () => {
-            setDeactivationLoading(true);
-            setDeactivationError(null);
+    // useEffect(() => {
+    //     const fetchDeactiveLink = async () => {
+    //         setDeactivationLoading(true);
+    //         setDeactivationError(null);
             
-            try {
-                const response = await apiFetch({ 
-                    path: `/mos-product-specifications-tab/v1/deactivation-link` 
-                });
+    //         try {
+    //             const response = await apiFetch({ 
+    //                 path: `/mos-product-specifications-tab/v1/deactivation-link` 
+    //             });
                 
-                if (response.success && response.deactivation_url) {
-                    setDeactivationUrl(response.deactivation_url);
+    //             if (response.success && response.deactivation_url) {
+    //                 setDeactivationUrl(response.deactivation_url);
                     
-                    // Set the URL in the form
-                    formApi.current?.setValue("deactivation_url", response.deactivation_url);
-                } else {
-                    throw new Error(response.message || "Failed to fetch deactivation URL");
-                }
-            } catch (error) {
-                console.error("Error fetching deactivation link:", error);
-                setDeactivationError(error.message || "Failed to load deactivation URL");
+    //                 // Set the URL in the form
+    //                 formApi.current?.setValue("deactivation_url", response.deactivation_url);
+    //             } else {
+    //                 throw new Error(response.message || "Failed to fetch deactivation URL");
+    //             }
+    //         } catch (error) {
+    //             console.error("Error fetching deactivation link:", error);
+    //             setDeactivationError(error.message || "Failed to load deactivation URL");
                 
-                Toast.error({
-                    content: __("Error fetching deactivation URL", "mos-product-specifications-tab"),
-                    theme: "light",
-                });
-            } finally {
-                setDeactivationLoading(false);
-            }
-        };
+    //             Toast.error({
+    //                 content: __("Error fetching deactivation URL", "mos-product-specifications-tab"),
+    //                 theme: "light",
+    //             });
+    //         } finally {
+    //             setDeactivationLoading(false);
+    //         }
+    //     };
         
-        // Only fetch if form API is ready
-        if (formApi.current) {
-            fetchDeactiveLink();
-        }
-    }, [settings]); // Re-fetch when settings change
+    //     // Only fetch if form API is ready
+    //     if (formApi.current) {
+    //         fetchDeactiveLink();
+    //     }
+    // }, [settings]); // Re-fetch when settings change
 
     /* ----------------------------------
        Submit
@@ -358,7 +358,7 @@ const Tools = () => {
                     {/* -------------------------
                        Deactivate Plugin URL section
                     -------------------------- */}
-                    <div className="setting-unit pt-4">
+                    {/* <div className="setting-unit pt-4">
                         <Row gutter={[24, 24]} align="middle">
                             <Col xs={24} lg={12} xl={14}>
                                 <Title heading={4}>
@@ -400,7 +400,7 @@ const Tools = () => {
                                 />
                             </Col>
                         </Row>
-                    </div>
+                    </div> */}
 
                     {/* -------------------------
                        Save / Reset buttons

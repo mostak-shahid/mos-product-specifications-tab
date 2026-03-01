@@ -43,7 +43,7 @@ export default function Dashboard() {
                         {__("Create professional, structured WooCommerce product specification tables with unlimited rows, drag & drop sorting, tooltips, and responsive design — lightweight and SEO-friendly.", "mos-product-specifications-tab")}
                     </Paragraph>
                     <Paragraph>
-                        {__("Product Specifications Tab for WooCommerce allows you to display detailed product information in a clean, structured, and professional specification table inside a dedicated WooCommerce product tab.", "mos-product-specifications-tab")}
+                        {__("MOS Product Specifications for WooCommerce allows you to display detailed product information in a clean, structured, and professional specification table inside a dedicated WooCommerce product tab.", "mos-product-specifications-tab")}
                     </Paragraph>
                     <Paragraph>
                         {__("Clear product information builds trust. The more organized and detailed your product data is, the easier it becomes for customers to make confident purchase decisions.", "mos-product-specifications-tab")}
@@ -202,7 +202,7 @@ export default function Dashboard() {
                             <Paragraph>
                                 {__("We love to hear from you, we would appreciate every single review.", "mos-product-specifications-tab")}                                    
                             </Paragraph>
-                            <Text link={{ href: 'https://wordpress.org/support/plugin/mos-product-specifications-tab/reviews/?filter=5#new-post', target:"_blank" }}>
+                            <Text link={{ href: 'https://wordpress.org/support/plugin/mos-product-specifications-tab/reviews/', target:"_blank" }}>
                                 {__("Rate", "mos-product-specifications-tab")}
                             </Text>                            
                         </Card>

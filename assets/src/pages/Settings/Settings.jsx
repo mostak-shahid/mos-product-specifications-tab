@@ -211,7 +211,7 @@ const Settings = () => {
                         itemKey: "rate",
                         text: __("Rate Us", "mos-product-specifications-tab"),
                         icon: <IconLikeHeart />,
-                        link: "https://wordpress.org/support/plugin/mos-product-specifications-tab/reviews/?filter=5#new-post",
+                        link: "https://wordpress.org/support/plugin/mos-product-specifications-tab/reviews/",
                         linkOptions: {
                             target: '_blank',
                             rel: 'noopener noreferrer', // recommended for security

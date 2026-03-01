@@ -244,13 +244,13 @@ class Rest_API
 			)
 		);
         
-        register_rest_route( self::NAMESPACE, '/deactivation-link',
-            array(
-                'methods' => 'GET',
-                'callback' => array( $this, 'get_deactivation_link' ),
-                'permission_callback' => array( $this, 'check_permission' ),
-            )
-        );
+        // register_rest_route( self::NAMESPACE, '/deactivation-link',
+        //     array(
+        //         'methods' => 'GET',
+        //         'callback' => array( $this, 'get_deactivation_link' ),
+        //         'permission_callback' => array( $this, 'check_permission' ),
+        //     )
+        // );
 
         //Log table REST routes
         /**
@@ -1148,49 +1148,49 @@ class Rest_API
      * @param WP_REST_Request $request The request object.
      * @return WP_REST_Response|WP_Error The response or error.
      */
-    public function get_deactivation_link( WP_REST_Request $request ) {
-        // Get the encrypted key from options
-        $encrypted_key = get_option( 'mos_product_specifications_tab_deactive_key' );
+    // public function get_deactivation_link( WP_REST_Request $request ) {
+    //     // Get the encrypted key from options
+    //     $encrypted_key = get_option( 'mos_product_specifications_tab_deactive_key' );
 
-        if ( false === $encrypted_key ) {
-            return new WP_Error(
-                'key_not_found',
-                __( 'Deactivation key not found. Please reactivate the plugin.', 'mos-product-specifications-tab' ),
-                array( 'status' => 404 )
-            );
-        }
+    //     if ( false === $encrypted_key ) {
+    //         return new WP_Error(
+    //             'key_not_found',
+    //             __( 'Deactivation key not found. Please reactivate the plugin.', 'mos-product-specifications-tab' ),
+    //             array( 'status' => 404 )
+    //         );
+    //     }
 
-        // Decrypt the key
-        $decrypted_key = CryptoHelper::decrypt( $encrypted_key );
+    //     // Decrypt the key
+    //     $decrypted_key = CryptoHelper::decrypt( $encrypted_key );
 
-        if ( false === $decrypted_key ) {
-            return new WP_Error(
-                'decryption_failed',
-                __( 'Failed to decrypt deactivation key. Please contact support.', 'mos-product-specifications-tab' ),
-                array( 'status' => 500 )
-            );
-        }
+    //     if ( false === $decrypted_key ) {
+    //         return new WP_Error(
+    //             'decryption_failed',
+    //             __( 'Failed to decrypt deactivation key. Please contact support.', 'mos-product-specifications-tab' ),
+    //             array( 'status' => 500 )
+    //         );
+    //     }
 
-        // Build the deactivation URL
-        $deactivation_url = add_query_arg(
-            array(
-                'action' => 'mos_product_specifications_tab_deactivate',
-                'secret_key' => $decrypted_key,
-            ),
-            admin_url( 'admin-post.php' )
-        );
+    //     // Build the deactivation URL
+    //     $deactivation_url = add_query_arg(
+    //         array(
+    //             'action' => 'mos_product_specifications_tab_deactivate',
+    //             'secret_key' => $decrypted_key,
+    //         ),
+    //         admin_url( 'admin-post.php' )
+    //     );
 
-        // Return the response
-        return new WP_REST_Response(
-            array(
-                'success' => true,
-                'deactivation_url' => $deactivation_url,
-                'message' => __( 'Deactivation link generated successfully.', 'mos-product-specifications-tab' ),
-                'warning' => __( 'This link will only work once. After deactivation, a new link will be generated on reactivation.', 'mos-product-specifications-tab' ),
-            ),
-            200
-        );
-    }
+    //     // Return the response
+    //     return new WP_REST_Response(
+    //         array(
+    //             'success' => true,
+    //             'deactivation_url' => $deactivation_url,
+    //             'message' => __( 'Deactivation link generated successfully.', 'mos-product-specifications-tab' ),
+    //             'warning' => __( 'This link will only work once. After deactivation, a new link will be generated on reactivation.', 'mos-product-specifications-tab' ),
+    //         ),
+    //         200
+    //     );
+    // }
 
 }
 // new Rest_Api();

@@ -30,10 +30,6 @@ class Tools
         // }
 
         add_action('wp_ajax_mos_product_specifications_tab_reset_all_settings', [Ajax_API::class, 'mos_product_specifications_tab_reset_all_settings']);	
-        		
-        // Handle deactivation via admin-post
-        add_action( 'admin_post_mos_product_specifications_tab_deactivate', array( Ajax_API::class, 'handle_deactivation' ) );
-        add_action( 'admin_post_nopriv_mos_product_specifications_tab_deactivate', array( Ajax_API::class, 'handle_deactivation' ) );
-
+        
     }
 }
