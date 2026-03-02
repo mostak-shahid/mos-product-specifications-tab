@@ -4,7 +4,7 @@ Tags: woocommerce product specifications, product specification table, woocommer
 Requires at least: 6.6
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -136,6 +136,12 @@ You can use the WordPress.org support forum from the plugin page.
 11. Specification output panel
 
 == Changelog ==
+
+= 1.0.3 =
+* Tested up to WooCommerce 10.5.2
+* Fix: Feedback page bug
+* Fix: Broken link 
+* Updated internal libraries
 
 = 1.0.2 =
 * Tested up to WooCommerce 10.5.2
