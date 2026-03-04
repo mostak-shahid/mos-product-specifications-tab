@@ -1,6 +1,6 @@
 {
   "$schema": "https://playground.wordpress.net/blueprint-schema.json",
-  "landingPage": "/wp-admin/admin.php?page=mos-product-specifications-tab#/",
+  "landingPage": "/wp-admin/admin.php?page=mos-product-specifications-tab",
   "preferredVersions": {
     "php": "8.2",
     "wp": "latest"
@@ -12,12 +12,12 @@
     "kitchen-sink"
   ],
   "meta": {
-    "title": "Product specifications tab for WooCommerce Plugin Blueprint",
-    "description": "Security Plugin by Programmelab",
-    "author": "Programmelab",
+    "title": "Product Specifications Tab for WooCommerce",
+    "description": "Create structured WooCommerce product specification tables",
+    "author": "MosPress",
     "categories": [
-      "security",
-      "Plugin"
+      "ecommerce",
+      "woocommerce"
     ]
   },
   "steps": [
@@ -38,6 +38,16 @@
       "step": "installPlugin",
       "pluginZipFile": {
         "resource": "wordpress.org/plugins",
+        "slug": "woocommerce"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginZipFile": {
+        "resource": "wordpress.org/plugins",
         "slug": "mos-product-specifications-tab"
       },
       "options": {
@@ -47,8 +57,12 @@
     {
       "step": "setSiteOptions",
       "options": {
-        "blogname": "Product specifications tab for WooCommerce Demo"
+        "blogname": "Product Specifications Tab Demo"
       }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php wp_insert_post(['post_title' => 'Demo Product', 'post_type' => 'product', 'post_status' => 'publish', 'meta_input' => ['_price' => 99, '_regular_price' => 99, '_stock_status' => 'instock']]); ?>"
     }
   ]
 }
